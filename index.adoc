@@ -7,6 +7,6 @@
 
 OWASP Montreal, July 2013::
 
-  * link:linux-cdorked/owasp-mtl-july13/index.html[Linux/Cdorked: a server-side malware campaign]
+  * link:linux-cdorked/owasp-mtl-201307/index.html[Linux/Cdorked: a server-side malware campaign]
 
 Olivier Bilodeau, https://twitter.com/obilodeau[@obilodeau]
