@@ -1,0 +1,12 @@
+= Slide Decks
+:title: Olivier Bilodeau's Slide Decks
+:linkcss!:
+:sectids!:
+//:docinfo:
+:theme: flask
+
+OWASP Montreal, July 2013::
+
+  * link:linux-cdorked/owasp-mtl-july13/index.html[Linux/Cdorked: a server-side malware campaign]
+
+Olivier Bilodeau, https://twitter.com/obilodeau[@obilodeau]
