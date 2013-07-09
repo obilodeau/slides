@@ -1,0 +1,4 @@
+= Slides
+
+This is where I keep my slides. Asciidoc + dzslides toolchain rendering
+html5/js/css3 slides. Inspired from https://github.com/mojavelinux/decks/.
