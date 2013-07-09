@@ -8,5 +8,8 @@
 OWASP Montreal, July 2013::
 
   * link:linux-cdorked/owasp-mtl-201307/index.html[Linux/Cdorked: a server-side malware campaign]
+    [ https://dl.dropboxusercontent.com/sh/kvz73kna33f0pmu/ZONN2lZFtR/owasp-mtl-201307/linux-cdorked.pdf[PDF] ]
 
 Olivier Bilodeau, https://twitter.com/obilodeau[@obilodeau]
+
+NOTE: PDFs have a degraded experience because they are a series of rendered images, and so they are large and links don't work. Plus they are not animated.
