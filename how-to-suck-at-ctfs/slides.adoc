@@ -1,0 +1,719 @@
+How [not] to suck at Hacking Games
+==================================
+Olivier Bilodeau <olivier@bottomlesspit.org>
+v1.0, Nov 9th 2013
+:title: How [not] to suck at Hacking Games
+:description: Partage d'expérience sur les CTFs. Tout en s'amusant.
+:website: http://www.hackfest.ca/
+:confname: HackFest 2013
+:copyright: CC BY-SA 2.0
+:slidesurl: http://obilodeau.github.com/slides/how-to-suck-at-ctfs/
+:backend: dzslides
+:imagesdir: images
+:linkcss: true
+:dzslides-style: hf
+:dzslides-transition: horizontal-slide
+:syntaxoff: syntax="no-highlight"
+// :dzslides-highlight: github
+// :dzslides-fonts: family=Yanone+Kaffeesatz:400,700,200,300&family=Cedarville+Cursive
+
+////
+Slide-deck
+
+To render completely standalone file:
+$ asciidoc -a data-uri -a linkcss! slides.ad
+
+To link to the assets (images and css) using relative path:
+$ asciidoc slides.ad
+
+To compress images (do before render!):
+$ gm mogrify -size 1024x1024 -quality 90 -resize 1024x1024 images/*.{jpg,JPG}
+
+
+TODO
+
+grind infosec reactions and demotivationals
+
+* Groupies + Flag capture custom logo
+
+Coming together is a beginning.
+Keeping together is progress.
+Working together is success.
+-- Henry Ford
+
+////
+
+== \\
+=== Avertissement
+
+Vous allez tomber dans un univers mythique rempli
+d'incohérences et d'abus divers.
+
+...à vos risques et périls
+
+== \\
+
+[quote]
+image:mystical.jpg[align="center"]
+
+== \\
+=== Avertissement
+
+Présentation surchargée d'anglicismes!
+
+// http://imgur.com/FcWLHZv, self-made
+image:loi101-fail.png[align="center"]
+
+[NOTES]
+====
+1st: parce que je sais pas comment traduire ces termes.
+2nd parce que j'ai pas envie de parler de capturer des drapeaux et de faire des jeux de bidouilleurs.
+====
+
+== \\
+=== Avertissement
+
+* Stressez pas a prendre des notes de tools, y'a pas de contenu pertinent
+  dans cette présentation.
+
+== \\
+=== `:~$ whoami`
+
+* ESET Malware Researcher
+* Enseigne l'infosec à l'École de technologie supérieure [detail]#depuis 5 ans#
+* Membre fondateur de Amish Security image:AmishSec.png[width="20%"]
+* Membre fondateur des CISSP Groupies image:groupies.png[]
+
+[NOTES]
+====
+* Amish sous toute ses déclinaisons
+* quelques victoires
+====
+
+== \\
+=== Anonymous
+// (C) CISSP Groupies
+image:groupies-anon.png[]
+
+== \\
+=== Troll
+// (C) CISSP Groupies
+image:groupies-trollies.png[]
+
+== \\
+=== Monocle
+// (C) CISSP Groupies
+image:groupies-monocle.png[]
+
+== \\
+=== Nyan cat
+// (C) CISSP Groupies
+image:groupies-ncat.png[]
+
+== \\
+=== Grognons
+// (C) CISSP Groupies
+image:groupies-grumpies.png[]
+
+== \\
+=== Cuir cuir cuir moustache
+// (C) CISSP Groupies
+image:groupies-cuircuir.png[]
+
+[{topic}]
+== donc.. un CTF c'est quoi?
+
+CTF => Capture The Flags
+
+== \\
+=== Non pas comme ça...
+
+// http://www.mansonik.ro/wp-content/uploads/2012/03/quake_live_ctf_by_j58roldan-d2yfac6.jpg
+image:fps-ctf.jpg[width="100%"]
+
+== \\
+=== Plutôt comme ça
+
+// http://upload.wikimedia.org/wikipedia/commons/4/47/DEF_CON_17_CTF_competition.jpg
+image::defcon-ctf.jpg[width="100%"]
+
+[NOTES]
+====
+mais avec plus de diversité culturelle.. ouin.. p-e pas.
+
+====
+
+== \\
+=== Dans les faits ce sont...
+
+* hacking games 
+* hacking puzzles
+* computer science puzzle
+* nerd puzzles
+
+[NOTES]
+====
+Combien ici a main levé en on déjà fait?.
+====
+
+[{topic}]
+== Myth: CTF are about information security
+
+== \\
+=== comment ça marche?
+
+[{stepwise}]
+* des gens créatifs et généreux font des scénarios et défis
+* les participants arrivent (ou se loggent)
+* on cherche des flags
+* on soumet les flags à un système de pointage
+
+== \\
+// By Olivier Bilodeau. Can be reused under the CC-BY 4.0 license.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:scoreboard-ictf.png[width="100%"]
+
+== \\
+=== Les "fameux" flags
+
+[{stepwise}]
+* parfois sous la forme FLAG:abcdefgh...
+* sinon \{FLAG:...\}
+* ou encore The flag is: abcdefgh...
+* ou juste: 112f3a99b283a4e1788dedd8e0e5d35375c33747
+* ou même: ceciestunfantastiqueflag
+* mais après ont les voit partout!
+
+[NOTES]
+====
+Pas mettre 'the flag is'
+
+====
+
+== \\
+
+[quote, Benjamin Vanheuverzwijn]
+"La vie est un CTF"
+
+== \\
+=== Pourquoi participer?
+
+[{stepwise}]
+* apprendre!
+* sortir de sa zone de confort, constamment!
+* se trouver une job le fun
+* ou trouver du talent passionné
+* les contacts
+
+== \\
+
+[quote]
+"Plus de la moitié des chercheurs dans notre équipe ont été rencontrés dans des compétitions de type "CTF"."
+
+== \\
+
+[quote]
+"Le contexte de compétition nous permet rapidement de voir les compétences techniques et sociales d'un candidat."
+
+== \\
+
+[quote]
+"Plusieurs de nos chercheurs ont des problèmes de comportement et de consommation d'alcool ..."
+
+== \\
+
+[quote, pmb - Prés. ESET Canada]
+"... mais c'est tout de même grâce à eux que nous pouvons nous vanter d'avoir la meilleure équipe de recherche en sécurité au Québec."
+
+[NOTES]
+====
+si vous voulez lui parler c'est lui
+
+====
+
+== \\
+// By CISSP Groupies. Restricted.
+image:pmb.jpg[width="100%"]
+
+== \\
+=== variantes
+* Cyberwar (managed, unmanaged)
+* Red vs Blue
+* Jeopardy board
+* Javascript-RPG
+* Batshit insane (iCTF)
+* ...
+
+== \\
+=== perks
+* on-site || off-site || hybrid
+* besoin d'affiliation académique
+* limite de membres
+
+== \\
+=== Exemples de sujets explorés
+* Exploitation
+  ** Web
+  ** System
+  ** hw
+
+== \\
+=== Sujets explorés (suite)
+* Cryptographie
+  ** 1st gen: craptographie, enigma
+  ** 2nd gen: hashs, puzzles, small-RSA, password cracking, etc.
+  ** current-gen: crypto-oracle, big int maths
+
+[NOTES]
+====
+Tout ça est biaisé selon mes participations.
+====
+
+== \\
+=== Sujets explorés (suite)
+* reverse-engineering
+* forensic
+* réseautique
+* stégano
+
+== \\
+=== Sujets explorés (suite)
+* recon
+* system hardening
+* algo
+* lock-pick
+* specialized platforms (Android, iOS, haiku, BSDs, VMS, ...)
+
+== \\
+=== et attention!
+
+C'est de plus en plus dur.
+
+[NOTES]
+====
+Le niveau augmente d'années en années parce que les participants, la relève et l'insconscient collectifs sont de plus en plus fort. (avant: crypto = monosubstition, maintenant crypto = crypt-oracle)
+
+====
+
+[{topic}]
+== Tout le monde a une histoire
+
+La mienne a commencé a la Boule de cristal du CRIM
+
+[NOTES]
+====
+* Un CTF peu tradionnel, y'a pas de mot..
+* On arrive avec des boites patchés
+* faut owner des boites patchés en 76h (remember "games")
+* desfois ils droppent des boites ultra vulnerables (vieux NT4)
+* on se les chicanes via nos metasploits autopwn
+
+====
+
+[{topic}]
+== Cipher CTF 4
+
+Hey les enfants vous êtes a un vrai CTF
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:cipher4.JPG[width="100%"]
+
+[NOTES]
+====
+
+* fini le windows
+* fini les tools standards qui marchent
+====
+
+== \\
+=== Ensuite, un bel âge
+
+* HackUS
+* Defcon quals 18
+* CSAW
+* Hackfest
+* iCTF
+* ... (iterate)
+* hack.lu
+* plaidctf
+* mozilla ctf
+* northsec
+
+[{topic}]
+== CSAW
+
+Ma fille s'y met
+
+== \\
+// By Olivier Bilodeau. Can be reused under the CC-BY 4.0 license.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:csaw-young-hacker.JPG[width="100%"]
+
+[{topic}]
+== iCTF
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:ictf-2010.jpg[width="100%"]
+
+[{topic}]
+== Notre participation dégénéra
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:overflow01.jpg[width="100%"]
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:overflow02.jpg[width="100%"]
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:overflow03.jpg[width="100%"]
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:overflow04.jpg[width="100%"]
+
+[{topic}]
+== Tellement que...
+le "Bilodeau" peak -- hackfest 2011
+
+== \\
+// Derivative work of xkcd comic done by Philippe Arteau
+// http://xkcd.com/323/
+image:bilodeaupeak.png[]
+
+[{topic}]
+== Pour perdre tout CTF...
+
+== \\
+=== Rester seul
+// http://knowyourmeme.com/memes/forever-alone
+image:forever-alone.gif[]
+
+== \\
+=== skiddie tools only
+
+* nmap
+* metasploit
+* Backtrack / Kali
+
+[{topic}]
+== Never read write-ups!
+
+[NOTES]
+====
+definition
+Never try to reproduce them.
+====
+
+== \\
+=== Never train.
+
+Parce que le talent c'est inné
+
+== \\
+=== Never bookmark good tools
+
+or never share them with your team
+
+== \\
+=== Communication
+
+[{stepwise}]
+* Ne jamais parler aux autres équipes pour discuter des épreuves
+* Ne jamais participer sur IRC
+
+[{topic}]
+== Ne jamais imiter ses héros
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:init_null-dino.jpg[width="100%"]
+
+[{topic}]
+== Ne jamais sortir des sentiers battus
+
+== \\
+// By Olivier Bilodeau. Can be reused under the CC-BY 4.0 license.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:hf2012-se-stolen-flag.jpg[width="100%"]
+
+[{topic}]
+== Jamais ça non plus...
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:gin-cafeteriere.jpg[width="100%"]
+
+[NOTES]
+====
+mais ça c'est un vrai conseil
+
+====
+
+[{topic}]
+== Never code or learn to code
+
+== \\
+=== Jamais se fier aux outils des autres
+
+* http://pinboard.com/u:plaxx/t:security
+
+== \\
+=== Participer seulement si vous êtes certain de gagner!
+
+On n'apprends pas en perdant.
+
+[{topic}]
+== Plus sérieusement
+
+[{topic}]
+== perdre c'est mieux!
+
+[{topic}]
+== Avoir une muse
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:muse.jpg[width="70%"]
+
+[NOTES]
+====
+Trouvez la votre
+
+====
+
+[{topic}]
+== trouver vous un spot
+
+N'importe lequel!... Litéralement
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:foulab.jpg[width="70%"]
+
+[NOTES]
+====
+On est pas difficile. On fait des dons. Tant qu'on peut boire!
+
+Présence physique > présence en ligne > pas présent
+
+====
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:foulab01.jpg[width="100%"]
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:foulab02.jpg[width="100%"]
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:foulab03.jpg[width="100%"]
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:foulab04.jpg[width="100%"]
+
+== \\
+=== Ne pas se décourager
+
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:despair.jpg[width="40%"]
+
+[NOTES]
+====
+10 heures.
+====
+
+== \\
+=== Expliquer son 'challenge' a ses pairs
+
+== \\
+=== Causes désespérés
+
+Avoir un département des causes désespérés.
+
+[NOTES]
+====
+Laurent dit ça
+
+====
+
+[{topic}]
+== Soyez proactifs pour batir une équipe
+
+[NOTES]
+====
+Amish Security + Japan Overfl0w = Amish Overfl0w.
+NSec.
+====
+
+== \\
+=== Batissez-vous un toolchain
+
+* https://github.com/obilodeau/scratchpad
+* https://pinboard.in/u:plaxx/t:security
+
+[NOTES]
+====
+manque du stock un peu.
+====
+
+== \\
+=== Perdre aux compés difficiles
+
+Pour être meilleurs aux compés plus faciles
+
+* Développez des "réflexes"
+* Voyez venir les tendances
+
+[NOTES]
+====
+forensic, cryptoracle
+donne la chance de se preparer aux autres compés avec les write-ups, etc.
+
+====
+
+== \\
+=== Realité
+
+Ce sont des exercices. Ce n'est pas réel. Il faut penser au-delà de
+ce qu'on voit [en entreprise] ou lit.
+
+== \\
+=== Admins
+
+Les 'admins' veulent que vous réussissiez.
+
+[NOTES]
+====
+mis des centaines d'heures
+veulent voir les gens reussir
+si vous avez qqchose, n'hesitez pas a leur montrer votre progres et leur parler
+
+====
+
+[{topic}]
+== Aller plus loin
+et former la relève de nos équipes
+
+== \\
+=== Montréhack
+* 3e lundi du mois à la maison Notman
+* http://montrehack.ca
+
+// Be Hacker logo is made by ardactn and licensed under the Creative Commons
+// Attribution-Noncommercial-Share Alike 3.0 License.
+// http://ardactn.deviantart.com/art/be-hacker-v2-160393971
+image:montrehack.png[width="40%"]
+
+[NOTES]
+====
+Dans le cas de Montrehack c'est vraiment n'importe quoi mais ça marche!
+
+====
+
+== \\
+=== HackFest Hackerspace
+* 4e jeudi du mois au Cégep de Sainte-Foy
+* http://www.hackfest.ca/hackfest-community/hackerspace
+
+// used with permission
+image:hackfest-hackerspace.jpg[width="70%"]
+
+
+== \\
+=== Enfin.. s'amuser!!!
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:overflow05.jpg[width="100%"]
+
+[NOTES]
+====
+raconter l'histoire
+
+====
+
+== \\
+[quote]
+Barman: La même chose? (quatre gin tonics) +
+[il sert...] +
+
+== \\
+[quote]
+____
+Barman: Vous êtes a quel rang dans votre compétition? +
+Moi: Premiers +
+Barman: lolwat!? Vous êtes les seuls qui buvez!!
+____
+
+
+[{topic}]
+== Conclusion
+
+[{topic}]
+== Y'en a pas de tool secret...
+
+[NOTES]
+====
+Si y'a un secret c'est le gin
+
+====
+
+== \\
+
+[quote, Henry Ford]
+"Failure is simply the opportunity to begin again, this time more
+intelligently. There is no disgrace in honest failure; there is disgrace in
+fearing to fail."
+
+[NOTES]
+====
+quote de Henry Ford
+
+====
+
+== \\
+// By CISSP Groupies. Can be reused under the CC-BY 4.0 license unless otherwise specified.
+// http://creativecommons.org/licenses/by/4.0/deed.en
+image:we-want-you.jpg[width="100%"]
+
+[NOTES]
+====
+Dgoulet vous veut.
+====
+
+== \\
+=== Questions?
+
+Merci!
+
+@obilodeau
+
+[NOTES]
+====
+Combien de bouteilles de tanqueray dans ma présentation? ;)
+
+====
