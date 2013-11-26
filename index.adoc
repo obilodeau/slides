@@ -5,6 +5,11 @@
 //:docinfo:
 :theme: flask
 
+Hackfest 2013::
+
+  * link:vulnerability-disclosure-panel/index.html[Panel: Vulnerability Disclosure]
+    [ https://github.com/obilodeau/slides/blob/master/vulnerability-disclosure-panel/panel.adoc[source] ]
+
 OWASP Montreal, July 2013::
 
   * link:linux-cdorked/owasp-mtl-201307/index.html[Linux/Cdorked: a server-side malware campaign]
