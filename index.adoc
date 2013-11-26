@@ -7,6 +7,8 @@
 
 Hackfest 2013::
 
+  * link:how-to-suck-at-ctfs/[How &#91;not&#93; to suck at CTFs]
+    [ https://github.com/obilodeau/slides/blob/master/how-to-suck-at-ctfs/slides.adoc[source] ]
   * link:vulnerability-disclosure-panel/index.html[Panel: Vulnerability Disclosure]
     [ https://github.com/obilodeau/slides/blob/master/vulnerability-disclosure-panel/panel.adoc[source] ]
 
