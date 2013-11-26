@@ -14,8 +14,9 @@ Hackfest 2013::
 
 OWASP Montreal, July 2013::
 
-  * link:linux-cdorked/owasp-mtl-201307/index.html[Linux/Cdorked: a server-side malware campaign]
-    [ https://dl.dropboxusercontent.com/sh/kvz73kna33f0pmu/ZONN2lZFtR/owasp-mtl-201307/linux-cdorked.pdf[PDF] ]
+  * link:linux-cdorked/owasp-mtl-201307/[Linux/Cdorked: a server-side malware campaign]
+    [ https://github.com/obilodeau/slides/blob/master/linux-cdorked/slides.adoc[source],
+    https://dl.dropboxusercontent.com/sh/kvz73kna33f0pmu/ZONN2lZFtR/owasp-mtl-201307/linux-cdorked.pdf[pdf] ]
 
 Olivier Bilodeau, https://twitter.com/obilodeau[@obilodeau]
 
