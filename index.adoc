@@ -5,6 +5,11 @@
 //:docinfo:
 :theme: flask
 
+École de technologie supérieure, GTI619 class, December 2013::
+
+  * link:malware-and-reversing-at-eset/[Logiciels malveillants, reverse-enginnering et plus]
+    [ https://github.com/obilodeau/slides/blob/master/malware-and-reversing-at-eset/slides.adoc[source] ]
+
 Hackfest 2013::
 
   * link:how-to-suck-at-ctfs/[How &#91;not&#93; to suck at CTFs]
