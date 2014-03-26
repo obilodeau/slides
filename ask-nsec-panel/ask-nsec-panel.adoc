@@ -1,0 +1,121 @@
+Ask NorthSec
+============
+Olivier Bilodeau <olivier@bottomlesspit.org>
+v1.0, 25 mars 2014
+:title: Panel: Compétition en securité NorthSec
+:website: https://www.owasp.org/index.php/Montréal
+:event: OWASP Montréal Mars 2014
+:copyright: CC BY-SA 3.0
+:theme: volnitsky
+
+// increases font-size for cue-cards style
++++<style type="text/css">body { font-size: 200%; }</style>+++
+
+== Intro
+
+* Bienvenue
+* nous sommes chanceux d'avoir ...
+* je suis Olivier, hacker jeopardy (3e édition cette année), PAS un admin de
+  nsec
+
+.On se met debout et on assis.
+* Qui ne connait pas nsec?
+* Qui n'a jamais participé?
+* Qui n'a jamais gagné à NorthSec? :3
+* Bon assoyez vous maintenant :)
+
+.House rules
+* Participatif
+* S'amuser
+* Débutons
+
+// these are forced page breaks
+<<<
+
+== Questions
+
+=== Réchauffement
+
+* Introduisez-vous. Votre rôle dans l'organisation et/ou pourquoi vous
+  aurait-on attribué ce surnom?
+* C'est quoi NorthSec?
+* Qu'est-ce qui a changé d'avec le HackUS?
+* Pourquoi avoir changé?
+* [crowd]?
+
+<<<
+
+=== Challenges
+
+* Comment on les créer?
+* Où est-ce qu'on s'inspire?
+* Comment on les valides (difficulté, etc.)?
+* Pourquoi tant vouloir se démarquer toujours d'un CTF à l'autre?
+* C'est quoi votre vision de l'approche defcon-quals vs ppp vs CSAW vs Nsec?
+* Pourquoi l'évolution de la façon d'intégrer les challenges au fil du temps?
+* Où est la track _social engineering_ (hack-the-human)?
+* [crowd]?
+
+<<<
+
+=== Infrastructure
+
+* Comment fonctionne les environnements des équipes? isolé, ensemble?
+* Comment ça a évolué dans le temps (depuis hackus, etc.)?
+* Comment fonctionne le réseau?
+* C'était quoi la pipe upstream?
+* La période où vous devez faire _scaler_ ou intégrer les challenges des
+  bénévoles dans l'infra ça ressemble à quoi? durée, niveau de panique,
+  regressions, etc.
+* Il y a une rumeur qui parle que 2015 sera wifi-only? C'est vrai?
+* [crowd]?
+
+<<<
+
+=== Logistique
+
+* Le plus gros défi c'est quoi? power, argent, ...?
+* Des inattendus en 2013? en 2014?
+* Qu'est-ce qui est le plus long dans cette job là?
+* Combien de bénévoles en tout pour rouler NorthSec? avant et pendant
+* [crowd]?
+
+<<<
+
+=== 2013
+
+* Selon toi (un qui parle pas souvent) vos bon coups, mauvais coups?
+* (un qui a pas parlé souvent) Raconte une annecdote?
+* [crowd]?
+
+=== 2014
+
+* Que réserve 2014? Surprises?
+* Des annonces que vous pouvez faire à ce stade-ci?
+* [crowd]?
+
+<<<
+
+=== Vos plans futurs
+
+* Des plans pour releaser des raw SQLs dumps ou des pcaps pour la communauté
+  comme le font déjà legitbs ou ictf?
+* Que réserve 2015?
+* Le truc que vous voudriez le plus changer mais que c'est difficile?
+* [crowd]?
+
+<<<
+
+=== Last words
+
+* Des choses a demander a la crowd avant de terminer? (aide, etc.)
+* [crowd] des dernières questions avant de terminer?
+
+<<<
+
+== Outro
+
+* Merci OWASP (Jonathan Marcil), NSec (panelistes), Polyhack (Xavier) et EPM
+* On va sûrement prendre une bière a kkpart après, restez pas trop loin pour
+  savoir
+

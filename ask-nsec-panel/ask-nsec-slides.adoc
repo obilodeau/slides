@@ -1,0 +1,34 @@
+Panel: Ask NorthSec
+===================
+Olivier Bilodeau <olivier@bottomlesspit.org>
+v1.0, 27 mars 2014
+:title: Panel: Compétition en securité NorthSec
+:website: https://www.owasp.org/index.php/Montréal
+:event: OWASP Montréal Mars 2014
+:copyright: CC BY-SA 3.0
+:backend: dzslides
+:linkcss!:
+:dzslides-style: owasp-mtl
+:dzslides-transition: horizontal-slide
+:syntaxoff: syntax="no-highlight"
+// :dzslides-highlight: github
+// :dzslides-fonts: family=Yanone+Kaffeesatz:400,700,200,300&family=Cedarville+Cursive
+
+== \\
+=== `./ask-nsec.py`
+
+
+* Gabriel Tremblay [detail]#le lubrificateur, @etrangeca#
+* François Proulx [detail]#NP-complet, @francoisproulx#
+* Laurent Desaulniers [detail]#juste un challenge de plus, @el_d33#
+* Stéphane Graber [detail]#c'est fini IPv4, @stgraber#
+
+Chaise: Olivier Bilodeau [detail]#M. Jeopardy, @obilodeau#
+
+[{topic}]
+== Merci!
+
+* https://www.owasp.org/index.php/Montr%C3%A9al[OWASP Montreal]
+* http://nsec.io[NorthSec]
+* http://polyhack.org/[PolyHack]
+* http://www.polymtl.ca/[École Polytechnique de Montréal]
