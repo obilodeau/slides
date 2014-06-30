@@ -1,0 +1,27 @@
+--- view/index.js	2014-04-17 15:37:38.000000000 -0400
++++ index.js	2014-06-30 13:42:12.878747817 -0400
+@@ -217,11 +217,13 @@
+     img.height = Math.max(thumbWidth + pad, contSize.y - pad);
+     img.width = img.height * imgrt;
+   }
++  /* disabled the forced shrinking of images
+   if(width * height <= minupscale && img.width > width)
+   {
+     img.width = width;
+     img.height = height;
+   }
++  */
+ 
+   img.setStyles(
+   {
+@@ -280,8 +282,8 @@
+   }
+   if(imgs.download)
+     dsc.push("<a title=\"Download album\" href=\"" + encodeURI(imgs.download) + "\"><img src=\"download.png\"/></a>");
+-  if(imgs.data[eidx].date)
+-    dsc.push("<b>Date</b>: " + imgs.data[eidx].date);
++  // showing filename instead of date
++  dsc.push(imgs.data[eidx].img[0]);
+   ehdr.set('html', dsc.join(' '));
+   ehdr.setStyle('display', (dsc.length? 'block': 'none'));
+ 

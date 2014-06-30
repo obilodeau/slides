@@ -1,0 +1,12 @@
+WiFi Mea Culpa
+==============
+Olivier Bilodeau <olivier@bottomlesspit.org>
+v1.0, Jun 29th 2014
+
+The sources for a lightning talk about what went wrong with the Wireless this
+year at Recon 2014.
+
+Licensing unknown. I aggressively sourced images from Google Images. Camera
+photos are my own or Guillaume Germain's with permission. I will remove content
+if requested to. Such removal requests might make me cry and say that life is
+unfair.
