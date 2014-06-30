@@ -5,6 +5,11 @@
 //:docinfo:
 :theme: flask
 
+OWASP Montreal, March 27th 2014::
+
+  * link:ask-nsec-panel/[Panel: Ask NorthSec]
+    [ https://github.com/obilodeau/slides/blob/master/ask-nsec-panel/ask-nsec-slides.adoc[source] ]
+
 École de technologie supérieure, GTI619 class, December 2013::
 
   * link:malware-and-reversing-at-eset/[Logiciels malveillants, reverse-enginnering et plus]
