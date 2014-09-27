@@ -5,6 +5,12 @@
 //:docinfo:
 :theme: flask
 
+Derbycon 4, 2014::
+
+  * link:derbycon-windigo-backstory/[Hunting Malware on Linux Production
+    Servers: The Windigo Backstory]
+    [ https://github.com/obilodeau/slides/tree/master/derbycon-windigo-backstory[source] ]
+
 Recon 2014::
 
   * link:recon-wireless-mea-culpa/[WiFi Mea Culpa], lightning talk
