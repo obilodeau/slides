@@ -1,0 +1,58 @@
+= reveal.js slide decks
+:author: Olivier Bilodeau <bilodeau@eset.com>
+
+== Prerequisites
+
+These slides are in asciidoc format rendered into reveal.js format. To render
+the html version we need to install a few things:
+
+----
+$ gem install asciidoctor
+$ git clone https://github.com/hakimel/reveal.js.git
+$ git clone https://github.com/asciidoctor/asciidoctor-backends.git
+----
+
+`reveal.js/` must be in the same directory as the document but
+`asciidoctor-backends/` can be anywhere.
+
+== Rendering
+
+We are using asciidoctor instead of asciidoc for this.
+
+----
+asciidoctor -T ~/src/asciidoctor-backends/slim/revealjs -b revealjs derbycon.ad
+----
+
+Replace `~/src/asciidoctor-backends/` with where you installed the repository.
+
+== View with Speaker notes
+
+You need some sort of local HTTP server. If you have the Python runtime
+installed you can:
+
+    python -m SimpleHTTPServer 8000
+
+and the browse to your `.html` presentation file and press `s` once it's
+loaded.
+
+Otherwise you can follow upstream's instructions:
+https://github.com/hakimel/reveal.js#full-setup
+
+== Fancy Makefile
+
+First, update the `ASCIIDOCTOR_BACKENDS` variable to refer to where you
+installed the asciidoctor-backends repository.
+
+To render the document:
+
+    make
+
+To open the rendered document:
+
+    make open
+
+To open the rendered document within a webserver (for speaker notes):
+
+    make serve
+
+Press `s` to get presenter view.
