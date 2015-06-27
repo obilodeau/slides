@@ -1,3 +1,6 @@
 [submodule "reveal.js"]
 	path = derbycon-windigo-backstory/reveal.js
 	url = https://github.com/obilodeau/reveal.js.git
+[submodule "northsec-two-years-of-montrehack/reveal.js"]
+	path = northsec-two-years-of-montrehack/reveal.js
+	url = https://github.com/hakimel/reveal.js.git

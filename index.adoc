@@ -5,6 +5,11 @@
 //:docinfo:
 :theme: flask
 
+NorthSec 2015::
+
+  * link:northsec-two-years-of-montrehack/[Two Years of Montrehack]
+    [ https://github.com/montrehack/slides/tree/nsec15-talk/talks/two-years-of-montrehack[source] ]
+
 Derbycon 4, 2014::
 
   * link:derbycon-windigo-backstory/[Hunting Malware on Linux Production

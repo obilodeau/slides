@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Olivier Bilodeau" /><title>data-background="#657b83"</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js/css/theme/league.css" id="theme" /><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet" /><script type="text/javascript">document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section data-background-size="cover" data-background-image="images/cover.jpg"><h1>Two Years of Montrehack</h1><p><small>Olivier Bilodeau</small></p></section><section id="_plan"><h2>Plan</h2><div class="ulist"><ul><li><p>What</p></li><li><p>Why</p></li><li><p>How (When, Where, Who)</p></li><li><p>Lessons</p></li><li><p>Tools and techniques</p></li><li><p>What&#8217;s next?</p></li></ul></div></section>
+<section data-background-size="contain" data-background-image="images/bio.jpg"></section>
+<section id="__whoami"><h2>$ whoami</h2><div class="paragraph"><p>Malware Researcher at ESET</p></div>
+<div class="paragraph"><p>Passionate about infosec and open source</p></div>
+<div class="paragraph"><p>Did <a href="https://eset.github.io/slides/">many</a>
+<a href="http://obilodeau.github.io/slides/">talks</a>, much lulz and luv for the community</p></div>
+<div class="paragraph"><p>Father of two</p></div>
+<div class="paragraph small"><small><a href="https://twitter.com/obilodeau">@obilodeau</a></small></div>
+<aside class="notes">which is a sponsor</aside></section>
+<section id="_shamelessplug"><h2>shamelessplug</h2><div class="paragraph"><p>Hacker Jeopardy Saturday at <code>$something</code> pm</p></div>
+<aside class="notes">I write the questions and run the show. much fun</aside></section>
+<section id="_what" data-background="#657b83"><h2>What</h2></section>
+<section><div class="paragraph"><p>Monthly workshop where we work on solving "Capture-the-Flag"* challenges</p></div>
+<div class="paragraph"><p><a href="http://montrehack.ca" class="bare">http://montrehack.ca</a></p></div>
+<div class="paragraph small"><small>*: infosec stuff not counter strike</small></div>
+<aside class="notes">Thankfully because of Guillaume&#8217;s presentation I know I don&#8217;t need
+to explain CTF</aside></section>
+<section><div class="paragraph"><p>Archives of past challenges on our Website</p></div>
+<aside class="notes"><div class="paragraph"><p>Most of them includes files to redo the challenges and solution (homemade
+or write-up)</p></div>
+<div class="paragraph"><p>In fact we can go back up to the 70s'</p></div></aside></section>
+<section data-background-image="images/70s.jpg"></section>
+<section data-background-size="contain" data-background-image="images/archives.png"><aside class="notes">and also by topic</aside></section>
+<section><div class="paragraph"><p>Android, Crackme, Cryptography, Exploit, Forensic, Hardware, IOS, Linux,
+Network, Reverse-Engineering, SQL Injection, Steganography and Web</p></div></section>
+<section><div class="paragraph"><p>Covered International and Local CTFs</p></div>
+<div class="paragraph"><p>Advent Calendar CTF, Boston Key Party, CySCA, CSAW, Hackfest, NorthSec, PlaidCTF, Hack.lu</p></div></section>
+<section><div class="paragraph"><p>We feature some of the Web&#8217;s gems in order to present our challenges</p></div></section>
+<section data-background-size="contain" data-background-image="images/meme-1.jpg"></section>
+<section data-background-size="contain" data-background-image="images/meme-2.jpg"></section>
+<section data-background-size="contain" data-background-image="images/meme-3.png"></section>
+<section data-background-size="contain" data-background-image="images/meme-4.jpg"></section>
+<section data-background-size="contain" data-background-image="images/meme-5.png"></section>
+<section data-background-size="contain" data-background-image="images/meme-6.png"></section>
+<section data-background-size="contain" data-background-image="images/meme-7.png"></section>
+<section data-background-size="contain" data-background-image="images/meme-8.png"></section>
+<section data-background-size="contain" data-background-image="images/meme-9.png"></section>
+<section><div class="paragraph"><p>But montrehack is also&#8230;&#8203;</p></div></section>
+<section data-background-size="contain" data-background-image="images/famous-joan.jpg"><div class="paragraph"><p>a place to meet celebrities</p></div>
+<aside class="notes">like the upcoming speaker</aside></section>
+<section id="_why" data-background="#657b83"><h2>Why</h2></section>
+<section><div class="paragraph"><p>Be better at CTF</p></div></section>
+<section><div class="paragraph"><p>Because we sucked at Defcon Quals</p></div></section>
+<section data-background-size="contain" data-background-image="images/scoreboard.png"><aside class="notes">Primarily add depth to the team</aside></section>
+<section><div class="paragraph"><p>We didn&#8217;t really succeeded at that</p></div>
+<aside class="notes">I&#8217;m old, I have kids, I don&#8217;t know as much CTFs</aside></section>
+<section><div class="paragraph"><p>In fact its more about <strong>routine</strong> and <strong>doing</strong></p></div>
+<div class="paragraph small"><small>True story bro</small></div>
+<aside class="notes"><div class="ulist"><ul><li><p>routine: No matter what, I spend at least 3 hours a month on CTFs
+(and then beer with friends).</p></li><li><p>doing: no talks where you hear other people do stuff, you do the stuff and
+your machine is always ready to go to war</p></li></ul></div></aside></section>
+<section id="_how" data-background="#657b83"><h2>How</h2></section>
+<section><div class="paragraph"><p>Someone proposes a challenge</p></div>
+<div class="paragraph"><p>We work on it</p></div>
+<div class="paragraph"><p>He presents his solution after 3 hours</p></div>
+<div class="paragraph small"><small>We go for beer after</small></div>
+<aside class="notes">but sometimes, like last week, we just go straight to the beer</aside></section>
+<section><div class="paragraph"><p>Participants must bring laptops</p></div>
+<div class="paragraph"><p>Hack in ad-hoc teams</p></div>
+<div class="paragraph small"><small>Make friends (optional)</small></div></section>
+<section id="_when"><h2>When</h2><div class="paragraph"><p>3rd Monday of every month*</p></div>
+<div class="paragraph small"><small>*: certain restrictions apply, see website for details</small></div></section>
+<section id="_where"><h2>Where</h2><div class="paragraph"><p>Notman house, UQAM or Google offices</p></div>
+<div class="paragraph small"><small>then Benelux</small></div></section>
+<section id="_who"><h2>Who</h2><div class="paragraph"><p>Pierre-Marc Bureau, Sebastien Duquette, Marc-Etienne M.Leveillé and myself</p></div>
+<aside class="notes"><div class="paragraph"><p>stand-up guys</p></div>
+<div class="paragraph"><p>new management model where we assign ourselves specific months and do
+everything mostly alone</p></div></aside></section>
+<section id="_shout_outs" data-background-size="contain" data-background-image="images/pride.jpg"><h2>Shout-outs</h2></section>
+<section><div class="paragraph"><p>Alexandre Rimthong for the montrehack name</p></div>
+<div class="paragraph"><p>Past presenters: Taher Azab, Xavier Garceau-Aranda, Pierre-Marc Bureau,
+Marc-Etienne M.Leveillé, Charles F.Hamilton, Philippe Arteau, Pierre-David
+Oriol, Marc-André Labonté, Sébastien Lorrain, Mathieu Lavoie, Benjamin
+Vanheuverzwijn, Sébastien Duquette, Gabriel Tremblay, Jonathan Marcil, Laurent
+Desaulniers, François Proulx and myself</p></div></section>
+<section id="_a_few_awards_should_go_to"><h2>A Few Awards Should Go To</h2></section>
+<section><div class="paragraph"><p>Most montrehack attended without actually working on the challenges</p></div></section>
+<section data-background-size="contain" data-background-image="images/initnull.jpg"><div class="paragraph"><p>Our very own NorthSec President <strong>Mr Gabriel Tremblay</strong></p></div></section>
+<section><div class="paragraph"><p>Longest challenge explanation</p></div>
+<div class="paragraph small"><small>Going 3x over allocated timeslot</small></div></section>
+<section data-background-image="images/proulx.jpg"><div class="paragraph"><p>NorthSec&#8217;s Logistics VP <strong>Mr. François Proulx</strong></p></div>
+<div class="paragraph small"><small>His challenge and explanation was good though</small></div></section>
+<section><div class="paragraph"><p>Making us secretly exploit a 0-day vulnerability in some library</p></div></section>
+<section data-background-image="images/arteau.jpg"><div class="paragraph"><p>NorthSec&#8217;s challenge maker Philippe Arteau</p></div>
+<div class="paragraph"><p>On an XXE injection in Apache Batik (CVE-2015-0250)</p></div></section>
+<section id="_lessons" data-background="#657b83"><h2>Lessons</h2></section>
+<section id="_lesson_0"><h2>Lesson #0</h2><div class="paragraph"><p>Co-maintainership doesn&#8217;t work</p></div>
+<aside class="notes"><div class="paragraph"><p>having core volunteers and expecting them to spread the load (one does fb,
+other email and website, etc.) didn&#8217;t work</p></div>
+<div class="paragraph"><p>when we embraced one pre-assigned guy per months things started to go way
+better (less late announcements, etc.)</p></div></aside></section>
+<section id="_lesson_1"><h2>Lesson #1</h2><div class="paragraph"><p>We accidentally offended several communities</p></div>
+<div class="paragraph"><p>We&#8217;re sorry</p></div>
+<aside class="notes">can&#8217;t really give more details because it might offend others but just keep
+this in mind when doing social events</aside></section>
+<section id="_lesson_2"><h2>Lesson #2</h2><div class="paragraph"><p>It takes time</p></div></section>
+<section data-background-size="contain" data-background-image="images/timespent.png"><aside class="notes">as you can see making those funny pictures can take a while</aside></section>
+<section id="_lesson_3"><h2>Lesson #3</h2><div class="paragraph"><p>Having checkpoints along a complex challenge is a good thing</p></div>
+<aside class="notes">We stop to provide hints to make sure no one is stalled. People tend to
+regroup at these stages and still make progress.</aside></section>
+<section id="_tools_and_techniques" data-background="#657b83"><h2>Tools and techniques</h2></section>
+<section><div class="paragraph"><p>There are no single tools or techniques</p></div>
+<div class="paragraph small"><small>The END</small></div>
+<aside class="notes">joking aside, people tend to use various tools, he are what I decided to
+highlight (I don&#8217;t speak on behalf of others)</aside></section>
+<section><div class="paragraph"><p>Learn a scripting language</p></div>
+<div class="paragraph"><p>Accumulate snippets of codes and re-use them, expand them over time</p></div>
+<aside class="notes">wait for it</aside></section>
+<section><div class="paragraph"><p>but preferably python3</p></div></section>
+<section><div class="paragraph"><p>Use ipython and ipython notebook</p></div>
+<aside class="notes">if you&#8217;ve never used notebook, you GOT to give it a try</aside></section>
+<section><div class="paragraph"><p>No plain gdb</p></div>
+<div class="paragraph"><p>fancy <code>.gdbinit</code> or
+<a href="https://github.com/crowell/p3da">p3da</a></p></div></section>
+<section><div class="paragraph"><p>From time to time try <a href="https://github.com/radare/radare2">radare2</a> instead of
+a pirated IDA Pro</p></div>
+<aside class="notes">Its getting there. I presented a full crackme type challenge using it.</aside></section>
+<section><div class="paragraph"><p>Wireshark is da bomb and learn tshark</p></div>
+<div class="paragraph small"><small>Especially <code>-T fields -e data</code> and then some piping into python with <code>fileinput</code>
+module for further processing.</small></div></section>
+<section><div class="paragraph"><p>Web: Burp or Owasp ZAP</p></div>
+<aside class="notes">Its been a while since I&#8217;ve done web so these might not be the best</aside></section>
+<section><div class="paragraph"><p>Use <code>vagrant</code> for disposable VMs</p></div></section>
+<section><div class="paragraph"><p>Learn to use a powerful text-editor like <code>vim</code>, <code>sublime</code> or <code>emacs</code></p></div>
+<div class="paragraph"><p>Preferably <code>vim</code></p></div></section>
+<section><div class="paragraph"><p>Learn to use the developers tools of your browser</p></div>
+<aside class="notes">Most of the modern web challenges can be done that way. The 'copy as curl'
+chrome command is awesome</aside></section>
+<section id="_what_s_next" data-background="#657b83"><h2>What&#8217;s next?</h2></section>
+<section><div class="paragraph"><p>Sponsored by the Benelux for a free beer after the workshop</p></div>
+<div class="paragraph"><p><span class="image"><img src="images/benelux.png" alt="benelux" /></span></p></div>
+<aside class="notes">expect round of applause. We are really glad about this</aside></section>
+<section><div class="paragraph"><p>No breaks this summer</p></div></section>
+<section><div class="paragraph"><p>Next month we get a Googler from Seattle</p></div>
+<div class="paragraph"><p>Defcon Quals 2015 challenge: wibbly wobbly timey wimey</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>yet to be confirmed, subject to change</p></li><li><p>and then what&#8217;s next is that you&#8217;ll participate!</p></li></ul></div></aside></section>
+<section id="_participate" data-background="#657b83"><h2>Participate!</h2></section>
+<section><div class="paragraph"><p>We want you to come to montrehack</p></div></section>
+<section><div class="paragraph"><p>We want you to
+<a href="https://github.com/montrehack/montrehack.github.com/wiki/Present-at-Montrehack">present</a>
+at montrehack!</p></div></section>
+<section><div class="paragraph"><p>We want you to
+<a href="https://github.com/montrehack/montrehack.github.com/wiki/Sponsorships-at-Montrehack">sponsor</a> montrehack!</p></div>
+<div class="paragraph"><p>Best way: present or create a challenge!</p></div>
+<aside class="notes">it could be hosted at your office too!</aside></section>
+<section><div class="ulist"><ul><li><p>Mailing list: <a href="https://groups.google.com/forum/#!forum/montrehack" class="bare">https://groups.google.com/forum/#!forum/montrehack</a></p></li><li><p>Twitter: <a href="https://twitter.com/montrehack" class="bare">https://twitter.com/montrehack</a></p></li><li><p>Other places: facebook, google+</p></li><li><p>Getting involved: <a href="https://groups.google.com/forum/#!forum/montrehack-meta" class="bare">https://groups.google.com/forum/#!forum/montrehack-meta</a></p></li></ul></div>
+<aside class="notes">We have an open mailing list for organization so you can subscribe and stalk
+if you want to be more involved</aside></section>
+<section><div class="paragraph"><p>You can easily
+<a href="https://github.com/montrehack/montrehack.github.com/pull/10">contribute</a> and
+participate</p></div>
+<aside class="notes">demo, just look how easy</aside></section>
+<section id="_questions" data-background-image="images/tshirt.jpg"><h2>Questions?</h2><div class="paragraph"><p>Thanks for your time!</p></div>
+<div class="paragraph"><p><a href="https://twitter.com/montrehack">@montrehack</a>,
+<a href="https://twitter.com/obilodeau">@obilodeau</a></p></div>
+<aside class="notes">switch to crowd pictures then ask how many speakers where in the pictures?
+mathieu, zhenya, joan, moi, coincidence ;)</aside></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: true,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, blood, league, moon, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'league',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'none',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'slide',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>
