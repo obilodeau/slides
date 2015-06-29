@@ -8,7 +8,9 @@
 NorthSec 2015::
 
   * link:northsec-two-years-of-montrehack/[Two Years of Montrehack]
-    [ https://github.com/montrehack/slides/tree/nsec15-talk/talks/two-years-of-montrehack[source] ]
+    [ https://www.youtube.com/watch?v=wb3gPxnlvH4&index=12&list=PLuUtcRxSUZUpQAa54H6PKkfX6A48ruzhh[video],
+    link:northsec-two-years-of-montrehack/northsec-two-years-of-montrehack.pdf[PDF],
+    https://github.com/montrehack/slides/tree/nsec15-talk/talks/two-years-of-montrehack[source] ]
 
 Derbycon 4, 2014::
 
