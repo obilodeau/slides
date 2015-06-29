@@ -12,6 +12,15 @@ NorthSec 2015::
     link:northsec-two-years-of-montrehack/northsec-two-years-of-montrehack.pdf[PDF],
     https://github.com/montrehack/slides/tree/nsec15-talk/talks/two-years-of-montrehack[source] ]
 
+linux.conf.au 2015::
+
+  * https://eset.github.io/slides/2015-01-16_linux.conf.au/advanced-linux-server-side-threats.html[Advanced Linux Server-Side Threats: How they work and what you can do about them] [
+    https://www.youtube.com/watch?v=L9tjcB_ij-0[video] ]
+
+Linuxcon Europe 2014::
+    * https://eset.github.io/slides/2014-10-15_linuxcon-europe/advanced-linux-server-side-threats.html[Advanced Linux Server-Side Threats: How they work and what you can do about them]
+      with https://twitter.com/marc_etienne_[Marc-Etienne M.Léveillé]
+
 Derbycon 4, 2014::
 
   * link:derbycon-windigo-backstory/[Hunting Malware on Linux Production
