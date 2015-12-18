@@ -5,6 +5,10 @@
 //:docinfo:
 :theme: flask
 
+by Olivier Bilodeau, https://twitter.com/obilodeau[@obilodeau], https://github.com/obilodeau[github]
+
+NOTE: PDFs are a degraded experience over the linked (HTML) slide decks.
+
 NorthSec 2015::
 
   * link:northsec-two-years-of-montrehack/[Two Years of Montrehack]
@@ -53,8 +57,4 @@ OWASP Montreal, July 2013::
 
   * link:linux-cdorked/owasp-mtl-201307/[Linux/Cdorked: a server-side malware campaign]
     [ https://github.com/obilodeau/slides/blob/master/linux-cdorked/slides.adoc[source],
-    https://dl.dropboxusercontent.com/sh/kvz73kna33f0pmu/ZONN2lZFtR/owasp-mtl-201307/linux-cdorked.pdf[pdf] ]
-
-Olivier Bilodeau, https://twitter.com/obilodeau[@obilodeau]
-
-NOTE: PDFs have a degraded experience because they are a series of rendered images, and so they are large and links don't work. Plus they are not animated.
+    https://dl.dropboxusercontent.com/sh/kvz73kna33f0pmu/ZONN2lZFtR/owasp-mtl-201307/linux-cdorked.pdf[PDF] ]
