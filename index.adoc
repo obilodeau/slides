@@ -9,6 +9,22 @@ by Olivier Bilodeau, https://twitter.com/obilodeau[@obilodeau], https://github.c
 
 NOTE: PDFs are a degraded experience over the linked (HTML) slide decks.
 
+Botconf 2015::
+
+  * https://eset.github.io/slides/2015-12-04_botconf/a-moose-once-bit-my-honeypot.html[A Moose Once Bit My Honeypot - A Story of an Embedded Linux Botnet]
+    [ https://eset.github.io/slides/2015-12-04_botconf/a-moose-once-bit-my-honeypot.pdf[PDF] ]
+
+Hackfest 2015::
+
+  * https://eset.github.io/slides/2015-11-06_hackfest/Internet-of-ThingsThreats.html[Internet of {Things,Threats}]
+    [ https://www.youtube.com/watch?v=Xcgz0cBmcng[video],
+    https://eset.github.io/slides/2015-11-06_hackfest/Internet-of-ThingsThreats.pdf[PDF] ]
+
+Virus Bulletin 2015::
+
+  * https://eset.github.io/slides/2015-10-01_virusbulletin/linux-moose-endangered-or-extinct.html[Linux/Moose endangered or extinct? An update on this atypical embedded Linux botnet]
+    [ https://eset.github.io/slides/2015-10-01_virusbulletin/linux-moose-endangered-or-extinct.pdf[PDF] ]
+
 NorthSec 2015::
 
   * link:northsec-two-years-of-montrehack/[Two Years of Montrehack]
