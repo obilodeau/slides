@@ -4,10 +4,32 @@
 :sectids!:
 //:docinfo:
 :theme: flask
+:gs: http://gosecure.github.io/presentations
+:twob: https://twitter.com/obilodeau
+:twtd: https://twitter.com/nyx__o
+:twhg: https://twitter.com/hugospns
 
 by Olivier Bilodeau, https://twitter.com/obilodeau[@obilodeau], https://github.com/obilodeau[github]
 
 NOTE: PDFs are a degraded experience over the linked (HTML) slide decks.
+
+NorthSec 2016::
+
+  * link:{gs}/2016-05-19_northsec/malboxes.html[Applying DevOps Principles for Better Malware Analysis]
+    by link:{twob}[Olivier Bilodeau] and link:{twhg}[Hugo Genesse]
+    [ link:{gs}/2016-05-19_northsec/OlivierBilodeau_HugoGenesse-Malboxes.pdf[PDF] ]
+
+AtlSecCon 2016::
+
+  * link:{gs}/2016-04-07_atlseccon/internet-of-threats.html[Internet of {Things,Threats}]
+    by link:{twob}[Olivier Bilodeau] and ESET's link:{twtd}[Thomas Dupuy]
+    [ link:{gs}/2016-04-07_atlseccon/OlivierBilodeau_ThomasDupuy-Internet_of_Threats.pdf[PDF] ]
+
+OWASP Montreal January 2016::
+
+  * link:{gs}/2016-01-20_owasp-mtl/internet-of-threats.html[Internet of {Things,Threats}]
+    by link:{twob}[Olivier Bilodeau] and ESET's link:{twtd}[Thomas Dupuy]
+    [ link:{gs}/2016-01-20_owasp-mtl/internet-of-threats.pdf[PDF] ]
 
 Botconf 2015::
 
