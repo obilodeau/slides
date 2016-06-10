@@ -8,10 +8,13 @@
 :twob: https://twitter.com/obilodeau
 :twtd: https://twitter.com/nyx__o
 :twhg: https://twitter.com/hugospns
+:twml: https://twitter.com/marc_etienne_
 
 by Olivier Bilodeau, https://twitter.com/obilodeau[@obilodeau], https://github.com/obilodeau[github]
 
 NOTE: PDFs are a degraded experience over the linked (HTML) slide decks.
+
+== Presentations
 
 NorthSec 2016::
 
@@ -42,6 +45,11 @@ Hackfest 2015::
     [ https://www.youtube.com/watch?v=Xcgz0cBmcng[video],
     https://eset.github.io/slides/2015-11-06_hackfest/Internet-of-ThingsThreats.pdf[PDF] ]
 
+ISOI XV::
+
+  * Hunting Penguins in the Dark: Modern Malware Research for Linux with
+    link:{twml}[Marc-Etienne M.Léveillé]
+
 Virus Bulletin 2015::
 
   * https://eset.github.io/slides/2015-10-01_virusbulletin/linux-moose-endangered-or-extinct.html[Linux/Moose endangered or extinct? An update on this atypical embedded Linux botnet]
@@ -59,15 +67,26 @@ linux.conf.au 2015::
   * https://eset.github.io/slides/2015-01-16_linux.conf.au/advanced-linux-server-side-threats.html[Advanced Linux Server-Side Threats: How they work and what you can do about them] [
     https://www.youtube.com/watch?v=L9tjcB_ij-0[video] ]
 
+Montrehack March 2015::
+
+  * http://montrehack.ca/2015/03/16/adctf-2014-password-checker.html[`./password-checker`
+    puzzle]
+
 Linuxcon Europe 2014::
     * https://eset.github.io/slides/2014-10-15_linuxcon-europe/advanced-linux-server-side-threats.html[Advanced Linux Server-Side Threats: How they work and what you can do about them]
-      with https://twitter.com/marc_etienne_[Marc-Etienne M.Léveillé]
+      with link:{twml}[Marc-Etienne M.Léveillé]
+
+SecTor 2014::
+
+  * Hunting Malware on Linux Production Servers: The Windigo Backstory
 
 Derbycon 4, 2014::
 
   * link:derbycon-windigo-backstory/[Hunting Malware on Linux Production
-    Servers: The Windigo Backstory]
-    [ https://github.com/obilodeau/slides/tree/master/derbycon-windigo-backstory[source] ]
+    Servers: The Windigo Backstory] [
+    https://www.youtube.com/watch?v=eRdqCbB9TcE[video],
+    https://github.com/obilodeau/slides/tree/master/derbycon-windigo-backstory[source]
+    ]
 
 Recon 2014::
 
@@ -93,6 +112,34 @@ Hackfest 2013::
 
 OWASP Montreal, July 2013::
 
-  * link:linux-cdorked/owasp-mtl-201307/[Linux/Cdorked: a server-side malware campaign]
-    [ https://github.com/obilodeau/slides/blob/master/linux-cdorked/slides.adoc[source],
-    https://dl.dropboxusercontent.com/sh/kvz73kna33f0pmu/ZONN2lZFtR/owasp-mtl-201307/linux-cdorked.pdf[PDF] ]
+  * link:linux-cdorked/owasp-mtl-201307/[Linux/Cdorked: a server-side malware
+    campaign] [ https://www.youtube.com/watch?v=R_-JI6xZXWQ[video],
+    https://github.com/obilodeau/slides/blob/master/linux-cdorked/slides.adoc[source],
+    https://dl.dropboxusercontent.com/sh/kvz73kna33f0pmu/ZONN2lZFtR/owasp-mtl-201307/linux-cdorked.pdf[PDF]
+    ]
+
+Defcon 19::
+
+  * link:defcon19-packetfence-open-source-nac/[PacketFence, The Open Source
+    NAC: What We've Done In The Last Two Years]
+  * link:defcon19-fingerbank/[Fingerbank - Open DHCP Fingerprints Database]
+
+Hackfest 2010::
+
+  * http://www.slideshare.net/hackfest/hackfest2010-802-1xfilairerevesbrises[Wired
+    802.1X: Broken dreams?] (French)
+
+== Appearances
+
+Twit Network::
+
+  * http://twit.tv/floss155[FLOSS Weekly Podcast #155 – PacketFence]
+
+== Publications
+
+* *Linux/Moose*, _embedded MIPS and ARM malware targeting routers with a payload
+doing social network fraud_,
+http://www.welivesecurity.com/wp-content/uploads/2015/05/Dissecting-LinuxMoose.pdf
+* *Operation Windigo*, _Linux server-side malware with several components: Perl
+spammer, {OpenSSH,httpd} backdoors, etc._,
+http://www.welivesecurity.com/wp-content/uploads/2014/03/operation_windigo.pdf
