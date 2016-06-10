@@ -1,0 +1,12 @@
+
+/*
+ * Show speaker notes and emphasize them
+ */
+body {
+  color: #4d4d4d;
+}
+
+p.hidden, li.hidden {
+  color: black;
+  font-weight: bold;
+}

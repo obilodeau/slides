@@ -1,0 +1,906 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//FR"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-CA">
+
+<head>
+    <title>PacketFence - Defcon19</title>
+    <meta name="copyright" content="Copyright &#169; 2011 Inverse inc." />
+    <meta name="duration" content="50" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="slidy/slidy.css" type="text/css" media="screen, projection, print" />
+    <link rel="stylesheet" href="slidy/packetfence.css" type="text/css" media="screen, projection, print" />
+    <link rel="stylesheet" href="slidy/packetfence_print_speaker.css" type="text/css" media="print" />
+    <script src="slidy/slidy.js" type="text/javascript"> </script>
+</head>
+
+<!-- TODO: Refer to the A Bridge Too Far talk when discussing 802.1x -->
+
+<body>
+<div class="background"><img alt="Inverse" id="head-logo" src="images/packetfence.png" /></div>
+<div class="slide cover">
+    <h1>PacketFence, the Open Source NAC: What we've done in the last two years</h1>
+    <p>Salivating on NAC secret sauce</p>
+</div>
+
+<div class="slide">
+    <h1>Presentation Plan</h1>
+    <ul>
+        <li>What's Network Access Control (NAC)</li>
+        <li>The secret sauce</li>
+        <li>The Open Source differentiator</li>
+        <li>The good and the bad of 2 years as lead developer</li>
+        <li>The Future of PacketFence (aka World Domination Roadmap)</li>
+        <li>Community bonding!</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Who I am</h1>
+    <img src="images/udrink_animation.gif" alt="udrink protocol" style="float:right" width="35%" />
+    <p>Olivier Bilodeau</p>
+    <ul>
+        <li>System architect working at Inverse inc</li>
+        <li>PacketFence lead developer since 2009</li>
+        <li>Teaching InfoSec to undergraduate in Montreal</li>
+        <li>...</li>
+        <li class="hidden">new father, Open Source nuts, enjoying CTFs a lot, tomdroid lead, brewing beer</li>
+    </ul>
+    <p>Social stuff</p>
+    <ul>
+      <li>twitter: <b>@packetfence</b> / identi.ca: <b>@plaxx</b></li>
+      <li>delicious: <b>plaxxx</b> / linkedin: <b>olivier.bilodeau</b></li>
+    </ul>
+</div>
+
+<div class="slide cover title">
+    <h1>What's Network Access Control (NAC)</h1>
+</div>
+
+<div class="slide">
+    <h1>NAC elevator pitch</h1>
+    <p class="hidden">You are smart, let's not focus on what is NAC, here's what you need to know</p>
+
+    <div>
+      <p class="incremental">NAC: Network Access (or Admission) Control</p>
+      <ul class="incremental">
+          <li>Authentication</li><li class="hidden">Map usernames to IP addresses (or MAC addresses)</li>
+          <li>Admission</li><li class="hidden">Allow, partially allow or deny users or devices</li>
+          <li>Control</li><li class="hidden">Watch for unauthorized stuff</li>
+            <ul class="incremental">
+              <li>Including: Outdated AV, patch-level, scanning corporate servers, spreading malware, ...</li>
+            </ul>
+          </li>
+      </ul>
+      <img src="images/nac-client-lifecycle.png" alt="NAC Client Lifecycle" 
+        class="incremental" style="float:right" width="30%"/>
+      <span class="incremental">
+        <p>Know <b>who</b> is <b>using your network</b> and making sure they <b>behave</b></p>
+      </span>
+    </div>
+
+</div>
+
+<div class="slide">
+    <h1>What NAC has become</h1>
+    <ul class="incremental">
+      <li>Remediation of users</li>
+      <li class="hidden">Crush helpdesk costs by giving users their own path to fix their problems</li>
+      <li>Guest management</li>
+      <li>Asset/Inventory management</li>
+      <li>Simplified access layer configuration</li>
+      <li class="hidden">Reduce network mgmt costs by centralizing decisions on a srv</li>
+    </ul>
+    <p class="hidden">varies greatly by organization size</p>
+</div>
+
+<div class="slide cover title">
+    <h1>The secret sauce</h1>
+</div>
+
+<div class="slide">
+    <h1>The technology</h1>
+    <ul class="incremental">
+        <li>Mostly Perl some PHP</li>
+        <li>Leveraging open source*
+        <li>Designed with high-availability in mind</li>
+        <li class="hidden">active-passive clustering</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Key design decisions</h1>
+    <ul class="incremental">
+        <li>Out of band*</li>
+        <li>Edge enforcement*</li>
+        <li>No Agent</li>
+        <li>Web-based captive portal</li>
+        <li>Listen to everything</li>
+        <p class="hidden">Its already all there: ARP, MAC, IPs, DHCP, UserAgents, ...</p>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Out of band</h1>
+    <div class="incremental">
+    <p>At first, relying on SNMP Traps*</p>
+    <ul>
+        <li class="hidden">next slide is about that</li>
+        <li>LinkUp / LinkDown events</li>
+        <li>MAC Nofication events</li>
+        <li>Port-Security (SecurityViolation) events</li>
+    </ul>
+    <p>Then RADIUS-based techniques emerged</p>
+    <ul>
+        <li>Wireless MAC-Authentication*</li>
+        <li>Wireless 802.1X*</li>
+        <li>followed by Wired MAC-Auth and 802.1X</li>
+    </ul>
+    <p class="hidden">for us: Wireless network brought a new way of doing things and the Wired side adopted it</p>
+    </div>
+</div>
+
+<div class="slide">
+    <h1>Edge enforcement: SNMP Traps based</h1>
+    <ul class="incremental">
+      <li>Events on network hardware generates Traps</li>
+      <li>PacketFence reacts on the traps</li>
+      <li>Uses SNMP to authorize the MAC / change the VLAN</li>
+      <li class="hidden">or telnet / ssh if the vendor sucks</li>
+      <li class="hidden">port-sec traps have MACs in them so are best otherwise we need to poll</li>
+      <li class="hidden">port-sec fail last-known state</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Protocol Reminders</h1>
+    <p>RADIUS</p>
+    <ul>
+        <li>key-value based protocol for AAA</li>
+        <li>"infrastructure" protocol</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide">
+    <h1>Protocol Reminders (contd.)</h1>
+    <p>802.1X</p>
+    <img src="images/dot1x.png" alt="802.1X" style="float:right" />
+    <ul>
+        <li>Extensible Authentication Protocol (EAP) over RADIUS</li>
+        <li>Actors
+          <ul>
+            <li>Supplicant</li><li class="hidden">client side software integrated in Win, Linux, OSX now</li>
+            <li>Authenticator</li><li class="hidden">aka NAS</li>
+            <li>Authentication Server</li>
+            <li class="hidden">NAS is switch / controller, auth srv: FreeRADIUS on PF Server</li>
+            <li class="hidden">explain typical dialog: client speaks to switch/controller with EAPoL (pre-access)</li>
+            <li class="hidden">switch turns around and speak RADIUS with server</li>
+            <li class="hidden">server reacts and send instructions to switch</li>
+            <li class="hidden">end-to-end encrypted EAP tunnel is established</li>
+            <li class="hidden">several EAP flavors things have mostly settled for PEAP/EAP-MsCHAPv2</li>
+            <li class="hidden">switch doesn't have to understand EAP</li>
+          </ul>
+        </li>
+        <li>Allows to securely share stuff with client (WPA-Enterprise keys)</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Protocol Reminders (contd.)</h1>
+    <p>MAC-Authentication</p>
+    <ul>
+      <li>Simple RADIUS auth with MAC as User-Name</li>
+      <li>Concept similar to 802.1X</li><li class="hidden">infra talks with srv, srv sends instructions</li>
+      <li>No strong authentication</li><li class="hidden">trust based on MAC seen on the wire</li>
+      <li>No end-to-end with client</li><li class="hidden">client doesn't need to "support it"</li>
+      <li class="hidden">not sure what came up first but it feels like a backport of 802.1X</li>
+    </ul>
+    <p>RADIUS CoA (RFC3576)</p>
+    <ul><li>Server-initiated</li></ul>
+    <p class="hidden">"new" RADIUS extension to support server-initiated changes</p>
+    </div>
+</div>
+
+<div class="slide">
+    <h1>Edge enforcement: RADIUS based</h1>
+    <ul class="incremental">
+        <li>Access-Accept most request</li>
+        <li>Return proper VLAN attribute based on client status</li>
+        <li>FreeRADIUS does RADIUS / 802.1X pieces</li><li class="hidden">full auth incl. NTLM (AD) trough samba</li>
+        <li>FreeRADIUS perl extension calls a PacketFence Web Server</li>
+        <li class="hidden">Decision and VLAN returned at this point</li>
+        <li class="hidden">H-A is critical as RADIUS is now a SPOF</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>The Captive Portal</h1>
+    <p>It provides</p>
+    <ul>
+        <li>Various authentication mechanism (LDAP, AD, RADIUS, Kerberos, Guests, ...)</li>
+        <li>Redirection to the Internet after authentication</li>
+        <li>Remediation information to users on isolated devices</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>The Captive Portal (contd.)</h1>
+    <p>In order to reach the captive portal</p>
+    <ul class="incremental">
+        <li>Provide DHCP</li> <li class="hidden">IP to MAC (but we do arp also)</li>
+        <li>DNS Blackhole</li>
+        <li class="hidden">In Registration / Isolation VLAN we are the DNS Server</li>
+        <li class="hidden">No matter the request, we return PacketFence's IP</li>
+        <li>SSL Redirection
+            <ul>
+                <li>Requested URL is redirected to captive portal
+                <blockquote>http://www.google.com =&gt; https://pf.initech.com/captive-portal</blockquote>
+                </li>
+                <p class="hidden">Using mod_rewrite, allow to enforce SSL without cert errors about domain mismatch</p>
+            </ul>
+        </li>
+        <li class="hidden">WISPr support</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Voice over IP</h1>
+    <p class="hidden">here I mean always VoIP with PC on it</p>
+    <div class="incremental">
+    <p>SNMP-based</p>
+    <ul>
+        <li>Old way: Rely on CDP / Voice VLAN features</li>
+        <li class="hidden">and allow dynamically learned MAC on Voice VLAN</li> 
+        <li class="hidden">That's right! No secret here, that's weak!</li>
+        <li>New way: handle them as regular devices</li>
+        <p class="hidden">auto-register them</li>
+        <p class="hidden">migrating to new way, using techniques mentionned later</p>
+    </ul>
+    <p>RADIUS-based</p>
+    <ul>
+        <li>MAC-Auth
+        <ul>
+          <li>The switch is more important than your device</li>
+        </ul></li>
+        <li>802.1X
+        <ul>
+          <li>Some VSA's to control behavior</li>
+          <li>Very few support 802.1X</li>
+        </ul></li>
+        <li class="hidden">Not widespread</li>
+    </ul>
+    </div>
+</div>
+
+<div class="slide">
+    <h1>Voice over IP (contd.)</h1>
+    <p><b>Note to pentesters</b>:</p>
+    <ul>
+        <li>Most want auto-registration of phones</li>
+        <li>Accomplished through:
+        <ul>
+          <li>MAC Vendor prefix</li>
+          <li>CDP</li>
+          <li>DHCP fingerprints </li>
+          <li>802.1X MD5 Auth</li>
+        </ul></li>
+        <li>Spoof: allowed on the Voice VLAN</li><li class="hidden">if not worse</li>
+        <li class="hidden">sometimes Voice VLANs IDs pushed down in DHCP Options!</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Quarantine</h1>
+    <img src="images/pf-remediation.png" style="float:right" alt="Remediation page example"/>
+    <ul>
+        <li>On a separate VLAN providing strong isolation</li>
+        <li>Triggers:
+            <ul>
+                <li>Operating System (based on DHCP fingerprints)</li>
+                <li class="hidden">I talked about those yesterday (FingerBank talk)</li>
+                <li>Browsers (User-Agent string)</li>
+                <li>MAC Vendor</li>
+                <li>Nessus plugin ID (failed scan)*</li>
+                <li>IDS rule triggered*</li>
+            </ul>
+        </li>
+        <li>Captive portal provides instructions</li><li class="hidden">Remediation!</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Policy checking and Monitoring</h1>
+    <p>Nessus</p>
+    <ul>
+        <li>Client-side scanning upon authentication</li>
+        <p class="hidden">AV signatures, patch level, worms, banned software, etc</p>
+        <li>Somewhat limited</li><li class="hidden">little use w/o domain credentials (scan open ports?)</li>
+        <li>not free</li>
+        <li class="hidden">the more tests the slower</li>
+    </ul>
+    <p>Snort IDS</p>
+    <ul>
+        <li>Clone your traffic to the PacketFence server</li>
+        <li class="hidden">port mirror / SPAN. Available remote also</li>
+        <li>Enable some Snort rules</li>
+        <li>Devices violating the rules will be isolated</li>
+        <p class="hidden">p2p, nmaps, skype, data leakage, websites</p>
+    </ul>
+    <p class="hidden">Surricata has been tested and works. Official support coming up.</p>
+</div>
+
+<div class="slide">
+    <h1>Network Hardware support</h1>
+    <ul>
+        <li>RADIUS-based is easiest
+            <ul>
+                <li>Somtimes like: <code>supportsWiredDot1X { return $TRUE };</code></li>
+            </ul>
+        </li>
+        <p class="hidden">Because its more standardized. Mostly NAS to ifIndex translation. And deauth</p>
+        <li>SNMP is challenging
+            <ul>
+                <li>Little standards (nothing regarding port-security)</li>
+                <li>Most implementation differ (even for the same vendor)</li>
+                <li>Nasty bugs*</li>
+                <li>Mostly: Read documentation, configure switch, snmpwalk, snmpset, rinse, repeat</li>
+            </ul>
+        </li>
+        <p class="hidden">detect SNMP technique, authorizeMAC, change VLAN, etc.</p>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>PacketFence ZEN</h1>
+    <p>ZEN: Zero Effort NAC</p>
+    <ul>
+      <li>VMware Virtual Appliance</li>
+      <li>Pre-installed</li>
+      <li>Pre-configured</li>
+    </ul>
+</div>
+
+<div class="slide cover title">
+    <h1>Open Source FTW!!</h1>
+</div>
+
+<div class="slide">
+    <h1>The open source advantage</h1>
+    <ul class="incremental">
+      <li>Vendor independence</li><li class="hidden">means we support more hardware brands</li>
+      <li class="hidden">and today's networks are heterogeneous. Also no vendor locking</li>
+      <li>Proprietary pricing questionable</li>
+      <li class="hidden">(per IP, per concurrent connections, per AP/Switch...)</li>
+      <li>We stay focused and build on top of</li>
+        <ul class="incremental">
+          <li>Usual daemons: Apache, Bind, dhcpd</li>
+          <li>Network services: Net-SNMP, FreeRADIUS </li>
+          <li>Security: snort, iptables</li>
+          <li>70+ Perl CPAN modules</li>
+          <li>Linux!</li>
+        </ul>
+      </li>
+      <li>familiar stack</li>
+      <li class="hidden">The technology is exposed: users know more and there's less reliance on vendors or contractors</li>
+      <li>Security is necessarily not solely based on obscurity</li>
+      <li class="hidden">Defeated proprietary NAC by hardcoding sniffed IP/gateway or pinning ARP</li>
+    </ul>
+</div>
+
+<div class="slide cover title">
+    <h1>2 years as lead developer</h1>
+    <p>The learning, the bad and the good.</p>
+</div>
+
+<div class="slide">
+    <h1>Learned: Most NACs are easy to bypass</h1>
+    <div class="incremental">
+        <p><i>To achieve user friendliness or network administrator friendliness one often drops security</i></p>
+        <ul>
+            <li>Per port exceptions (printers, voip, uplinks, etc.): Find them, leverage them</li>
+            <li>CDP enabled: Fake being an IP Phone or an infrastructure device</li>
+            <li>Real DNS exposed: DNS-tunnel out</li>
+        </ul>
+        <p><i>Because there is no authentication built-in L2 / L3</i></p>
+        <ul style="float:left">
+            <li>IP Address spoofing</li>
+            <li>MAC Address spoofing</li>
+            <li>DHCP client spoofing</li>
+            <li class="hidden">
+              Use dhclient with a config file. Spoof VoIP, infrastructure devices to gain access.
+              Could work w/ PacketFence based on config. Well hidden secret though!
+            </li>
+            <li>User-Agent spoofing</li>
+            <li class="hidden">
+              Spoof a mobile browser, bypass requirement for client Agent.
+              That's how some of the big boys do it..
+            </li>
+        </ul>
+        <img src="images/printer-mac.gif" style="float:right" alt="MAC addresses are written on printers"/>
+    </div>
+</div>
+
+<div class="slide">
+    <h1>Learned: Wired 802.1X bypass</h1>
+    <p class="incremental">802.1X means Port-Based Network <b>Access</b> Control</p>
+    <p class="hidden">
+        The problem with 802.1X:
+        - on the switch side, once a MAC is authenticated it is trusted, there's no additional field on the L2 packets
+        to prove that you are in the secret
+        This trust table is flushed if the port goes down but if you put a hub in between you avoid that.
+    </p>
+    <ol class="incremental">
+        <li>Put a hub between victim and switch (prevent port from going down)</li>
+        <li>Wait for victim to successfully authenticate</li>
+        <li>Spoof your MAC with victim's MAC</li>
+        <li>Plug into the hub</li>
+    </ol>
+    <img class="incremental" src="images/dot1x-bypass.png" alt="Bypassing 802.1X"/>
+    <p class="hidden">I haven't looked at MACsec yet. My bet: well done but back-compat will spoil it</p>
+</div>
+
+<div class="slide">
+    <h1>Learned: Wired 802.1X bypass</h1>
+    <p>Attack scenarios</p>
+    <ol>
+        <li>We keep legitimate client connected
+            <ul>
+                <li>Bad: Duplicated MACs on the same segment</li>
+                <p class="hidden">
+                    UDP mostly Ok if attacker is faster
+                    TCP you need client to be firewalled otherwise the victim will RST unsollicited SYN-ACKs
+                </p>
+                <li>Good: Original client could re-authenticate if switch asks</li>
+            </ul>
+        </li>
+        <li>Replace legitimate client
+            <ul>
+                <li>Bad: We won't pass a re-authentication request</li>
+                <li>Good: No network problems (no duplicated MAC on the segment)</li>
+            </ul>
+        </li>
+    </ol>
+    <p>Try it out. It works!</p>
+    <p class="hidden">I'm not _that_ concerned by this attack because we still run IDS, etc. but it's good to know</p>
+    <p class="hidden">Mitigated by periodic reauth</p>
+    <p><b>Update: </b>See the 'A Bridge Too Far' talk by skip</p>
+    <p class="hidden">or pwnie express</p>
+</div>
+
+<div class="slide">
+    <h1>Learned: getting into 802.1X is tricky business</h1>
+    <ul>
+      <li>Supplicant support
+        <ul>
+          <li>Win: Need to launch a service</li>
+          <li>OS EAP support varies</li>
+          <li>Proprietary supplicant quality / features varies</li>
+          <li>Some hardware begins to impement it</li>
+          <li>Forget about most of them</li><li class="hidden">Too many things does IP: UPS, slingbox, barcode scanner</li>
+        </ul>
+      </li>
+      <li>Outside the spec<ul>
+        <li>Should a supplicant do DHCP REQUEST or DISCOVER after a new authentication?</li>
+        <li>How should a switch handle multiple supplicant per port?</li>
+        <li class="hidden">Important for VoIP, Virtualization, etc.</li>
+        <li>Unified MAC-Auth + 802.1X configuration tricky</li>
+        <li class="hidden">Timing issues on reboot (dot1x times out, MAC-Auth kicks in)</li>
+      </ul></li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Learned: Wired 802.1X on Mac OSX is buggy</h1>
+    <p>After 802.1X re-authentication and a VLAN change (through RADIUS VLAN Attributes)</p>
+    <ul>
+        <li>OSX does unicast DHCP REQUEST to its previous DHCP Server (instead of DISCOVER)</li>
+        <li>Does 3 attempts with 1 minute delays between them</li>
+        <li>Then resort to a broadcasted DHCP DISCOVER</li>
+    </ul>
+    <p>A "correct" implementation does</p>
+    <ul>
+        <li>3 unicast DHCP REQUESTS in a row</li>
+        <li>Waits 2-3 seconds for replies</li>
+        <li>Then resort to a broadcasted DHCP DISCOVER</li>
+    </ul>
+    <p>Noteworthy</p>
+    <ul>
+        <li>They had the same issue on wireless but they fixed it in 10.6.5</li>
+        <li>We filed a bug report, provided requested information and haven't heard back since</li>
+        <li>Haven't looked at Lion</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Learned: Network vendor fragmentation</h1>
+    <ul>
+        <li>VLAN assignment through SNMP</li>
+        <li>Port-Security
+            <ul>
+                <li>Named differently</li>
+                <li>Implemented differently (per VLAN, per port, per port-VLAN)</li>
+                <li>SNMP access inconsistent</li>
+            </ul>
+        </li>
+        <li>RADIUS-based enforcement
+            <ul>
+                <li>Wired MAC-Authentication has many many names</li>
+                <li class="hidden">MAC-Auth Bypass aka MAB (Cisco)</li>
+                <li class="hidden">MAC-based authentication (HP)</li>
+                <li class="hidden">NEAP (Nortel)</li>
+                <li class="hidden">Netlogin (Extreme Networks)</li>
+                <li class="hidden">MAC RADIUS (Juniper))</li>
+
+                <li>802.1X's grey areas are all implemented differently
+                    <p class="hidden">TODO: show a diff of Cisco vs 3Com dot1x features</p>
+                </li>
+                <li>RADIUS Change of Authorization (RFC3576) not so supported...</li>
+            </ul>
+        </li>
+        <li>Newer stacks favor Web Services and only provide read-only SNMP</li>
+    </ul>
+    <p>Fortunately the situation on the wireless side is better</p>
+    <p class="hidden">with some caveats. I guess they learned from the wired mistakes?</p>
+</div>
+
+<div class="slide">
+    <h1>Learned: Network vendors firmwares quality</h1>
+    <ul>
+      <li>Regressions...</li>
+      <li>Weird coincidence? Same bugs implemented by different vendors</li>
+      <li class="hidden">port-sec seems often badly implemented. ex no more security traps</li>
+      <li>PacketFence: I think there's a bug here. Vendor: oh, right! it doesn't work using CLI but it does work with the Web GUI</li>
+      <li>Scale issues</li>
+      <li class="hidden">some implement the security table in MAC table. makes everything slower on large L2 VLANs</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Learned / Rant: Network vendor closedness</h1>
+    <p>I know some people aren't going to agree with this but...</p>
+    <ul>
+      <li>All vendors hold tight on their issue trackers</li>
+      <li>Most vendors hold tight on their firmware</li>
+      <li>Some vendors hold tight on their documentation</li>
+    </ul>
+    <p class="hidden">Can this stop!? What's the gain? Aside from making life harder for your <b>paying</b> customers off!!</p>
+    <p class="hidden">PHP vs VB anyone?</p>
+</div>
+
+<div class="slide">
+    <h1>Learned: Almost nobody does infrastructure authentication</h1>
+    <ul>
+        <li>Asking a user to install/select a CA to authenticate the infrastructure is too much</li>
+        <li>Asking the admins to push a GPO with the proper configuration is too much</li>
+        <li>Isn't WPA2/Enterprise enough they say?</li>
+    </ul>
+    <p>All the infrastructure to teach the user how to configure themselves can be sent over an open SSID in HTTPS but even then they just don't care! They want youtube, now!</p>
+    <p class="hidden">cynical: even then.. 
+      - if company doesn't generate it's own CA and if attacker can find out what CA they use 
+        he could buy ANY cert signed from that CA (no matter the CN) and be a valid infrastructure party
+      - users would click throught it
+    </p>
+</div>
+
+<div class="slide">
+    <h1>The bad</h1>
+    <ul>
+        <li>First installation step: Disable SELinux</li>
+        <p class="hidden">That's right! We suck at SELinux</p>
+        <li>Too short release cycles for a 'core infrastructure' piece of software</li>
+        <p class="hidden">
+            We did a lot of intrusive features and refactoring over the last few years that impacted users ability to upgrade
+            With enough interest, partners and devs we would have a stable[r] branch but under current circumstances it's simply not economic to do so
+            Stable is not sexy ;)
+        </p>
+        <li>No nmap integration :(</li>
+        <p class="hidden">As much as I respect Fyodor, we still haven't got around to it</p>
+        <li>External code contributors are scarce</li>
+        <p class="hidden">
+            I think we are having a hard time because the NAC space is too "enterprisy" and unsexy for hackers
+            "insert call to arm here"
+        </p>
+        <li>Pretty much CentOS/RHEL only</li>
+        <p class="hidden">hopefully I'll get to that soon.</p>
+    </ul>
+</div>
+
+<!-- TODO keywordize /-->
+<div class="slide">
+    <h1>The good: Development Process / Infrastructure</h1>
+    <ul>
+        <li>Fully automated smoke tests</li>
+        <li>Automated nightly packages promoted to the website (snapshots)</li>
+        <li>Stable branches (2.2, trunk) vs feature branches</li>
+        <li>All the work is directly public. No internal magic or big code dumps.</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>The good: Usability++</h1>
+    <ul>
+        <li>Re-organized and simplified documentation</li>
+        <li>Simplified installation</li>
+        <p class="hidden">
+            All our dependencies are now RPM packages, no more lengthy CPAN pulls failing on obscure tests
+            We have our own yum repo
+            PacketFence-Complete metapackage pulls in everything for a full PF stack (incl. db, FreeRADIUS, dhcpd, dns, ...)
+            We now have a package to configure FreeRADIUS.
+        </p>
+        <li>Simplified upgrades</li>
+        <p class="hidden">Because of a carefully written UPGRADE guide</p>
+        <li>Default VLAN management technique covers a lot of use cases</li>
+        <p class="hidden">symbolic vlan names to tag id</p>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>The good: Enterprise++</h1>
+    <ul>
+        <li>Web Administration users rights</li>
+        <p class="hidden">
+          Prevents helpdesk from modifying core configuration while allowing them to modify nodes, violations, etc.
+        </p>
+        <li>Out of the box support for routed environments</li>
+        <p class="hidden">
+            For remote reg/isolation VLANs: 
+            DHCP scopes, DNS blackhole and static route injection is all done automatically
+        </p>
+        <li>64 bit support</li>
+        <p class="hidden">That wasn't hard: Perl</p>
+        <li>Fancy guest workflow support
+          <ul>
+            <li>Email activation</li>
+            <li>Hotel-style Access codes</li>
+            <li>Remote pre-registration</li>
+            <li>Approval by a sponsor</li>
+            <li>SMS authentication</li>
+            <li>...</li>
+          </ul>
+        </li>
+        <p class="hidden">More than a year of dev, will be part of upcoming 3.0</p>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>The good: Performance++</h1>
+    <ul>
+        <li>1.8.5: ~10x MAC-Auth / 802.1X performance gain</li>
+        <p class="hidden">Avoiding spawning a shell in FreeRADIUS module. Don't laugh!</p>
+        <li>1.9.0: Avoiding object re-creation and spawning shell commands (impact not measured)</li>
+        <li>1.9.1: 23x faster captive portal</li>
+        <p class="hidden">mod_perl instead of perl cgi. Don't laugh!</p>
+        <li>2.2.0: Automatic Apache number of child tweaking based on system memory</li>
+        <li>2.2.1: Reduced by 550% RADIUS round-trip time on environment with lots of network devices</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>The good: Technology++</h1>
+    <ul>
+        <li>Web Services support for network hardware management</li>
+        <p class="hidden">In addition to SNMP, Telnet/SSH</p>
+        <li>New architecture for RADIUS-based access using Web Services
+            <ul>
+                <li>Strongly decouples RADIUS from PacketFence infra</li>
+                <li>Allows tiered deployment: many local "dumb" FreeRADIUS boxes with a central PacketFence server</li>
+                <li>Multi-site local RADIUS with caching in case of WAN failure</li>
+            </ul>
+        </li>
+        <li>Demoed a PacketFence in the cloud on Amazon EC2 (Remote RADIUS, local OpenVPN)</li>
+        <p class="hidden">Because we are so trendy</p>
+        <li>Making in-line and out-of-band work at the same time on the same server</li>
+        <p class="hidden">
+            For people still caught up with legacy network gear that doesn't support port-sec or MAC-Auth/802.1X
+        </p>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Cool hacks: Proxy Bypass</h1>
+    <p>Bypassing client-side proxy settings</p>
+    <ul>
+        <li>The problem
+            <ul>
+                <li>Browser tries to reach the proxy</li>
+                <li>Proxy doesn't exist in registration / isolation VLANs</li>
+                <li>We rely on the browser to present information to the user</li>
+                <li>We rely on user IP to identify him</li>
+                <li>Worse, SSL through a proxy is done with a CONNECT end-to-end tunnel</li>
+                <p class="hidden">Preventing a proxy to add a X-HTTP-FORWARDED-FOR header</p>
+            </ul>
+        </li>
+        <li>The solution
+            <ul>
+                <li>A Squid proxy</li>
+                <li>Squid's URL Redirectors makes sure that all hits are redirected to the captive portal</li>
+                <li>Squid's SSL Bump will terminate CONNECT requests</li>
+                <li>No SSL errors since we bump using the real captive portal cert</li>
+                <li>and everything is still encrypted up to the PacketFence server</li>
+            </ul>
+        </li>
+        <p class="hidden">
+            Attentive audience members will notice that it only works for DNS based proxy servers 
+            but it could be made to work
+            and that an initial https:// homepage will generate a cert error
+        </p>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Cool hacks: Javascript network access detection</h1>
+    <ul>
+        <li>The problem:
+            <ul>
+                <li>Enabling network access delay is unpredictable (OS, switch, browser, ...)</li>
+                <li class="hidden">HW / access type / server load / net latency / dhcp speed / OS</li>
+                <li>Avoid a fixed value otherwise everyone waits for slower</li>
+                <li class="hidden">redirect 3 mins avoid buggy apple but too slow for Win</li>
+                <li class="hidden">Asking people to reboot (or release / renew) is stupid</li>
+                <li>Browsers don't like changing IPs / DNS and still run javascript code </li>
+                <p class="hidden">Damn you Same Origin Policy!!</p>
+            </ul>
+        </li>
+        <li>The solution:
+            <ul>
+                <li>Turn off DNS prefetching (with HTTP Header)</li>
+                <li>Hidden &lt;img&gt; tag with an onload callback</li>
+                <li>Periodically inject a src that points to an image hosted on a 'registered' VLAN</li>
+                <li>Once the image successfully load, the callback is called and we redirect the user to its original destination</li>
+            </ul>
+        </li>
+        <p class="hidden">I know, I'm disgusted myself</p>
+    </ul>
+</div>
+
+<div class="slide cover title">
+    <h1>Our World Domination Roadmap</h1>
+</div>
+
+<div class="slide">
+    <h1>Short-term</h1>
+    <ul class="incremental">
+        <li>In-line mode to ease support of legacy network hardware (now in 3.0 beta!)</li>
+        <li class="hidden">reduced complexity</li>
+        <li>RADIUS Accounting / Bandwidth monitoring</li>
+        <li>NAP / Statement of Health client-side checks</li>
+        <li>RADIUS CoA (RFC3576)</li>
+        <li>ACL / QoS assignment with RADIUS</li>
+        <p class="hidden">We previewed the tech now we're mostly wondering what value it will bring and how</p>
+        <li>VPN support</li>
+        <li>Debian / Ubuntu support</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Long-term</h1>
+    <ul>
+        <li>Active-Active clustering support</li>
+        <li>nmap / OpenVAS integration</li>
+        <li>Making this stuff "Click Next-Next-Next" easy to install</li>
+        <p class="hidden">
+            With an initial Web-based configuration.
+            That should be enough to disrupt the current NAC market
+        </p>
+        <li>Rewrite the Web Administration interface</li><li class="hidden">would get rid of the php</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Research topics</h1>
+    <ul>
+        <li>IF-MAP support</li>
+        <p class="hidden">explain IF-MAP a bit</p>
+        <li>Open source multi-platform client-side agent</li>
+        <li>Trusted Computing Group's Trusted Network Connect (TNC)</li>
+        <p class="hidden">and more fun stuff like Ubikey support</p>
+    </ul>
+</div>
+
+<div class="slide title">
+    <h1>Community bonding!</h1>
+    <p>This is where we beg for help..</p>
+    <p class="hidden">So you heard the plans. Come and help us now!</p>
+    <ul class="incremental">
+        <li>Network hardware vendors
+            <ul>
+                <li>Contact us we want to support your hardware!</li>
+                <p class="hidden">If it's not buggy ;)</p>
+            </ul>
+        </li>
+        <li>Security software vendors
+            <ul>
+                <li>We want to integrate with your IDS, Netflow analyzer, IPS, Web filter, etc. but we need licenses...</li>
+            </ul>
+        </li>
+        <li>Developers
+            <ul>
+                <li>Low barrier to entry: It's all Perl!</li>
+            </ul>
+        </li>
+        <li>Audit our [web] code. We know there are issues. Help us find and fix them!</li>
+        <li>Become users!</li>
+        <li>We would <b>love</b> to see more businesses/consultants deploying PacketFence for their customers on their own!</li>
+    </ul>
+    <p class="hidden">
+        we feel alone fighting against the closed stacks in this technology mess..
+        It's time to make NAC a commodity!
+    </p>
+    <p class="hidden">
+        When it sucks, it's not deliberate, it's because we're short on resources
+        free: help us or sponsor us to get what you need in
+    </p>
+</div>
+
+
+<div class="slide">
+    <h1>Conclusion</h1>
+    <ul>
+      <li>I hope I demystified NAC for you</li>
+      <li>You should give PacketFence a try if you manage a network!</li>
+      <li class="hidden">it's good value for your money!</li>
+    </ul>
+</div>
+
+<div class="slide cover">
+    <h1>That's it</h1>
+    <p>I hope you enjoyed! See you in the debriefing room.</p>
+    <p>&nbsp;</p>
+    <p>twitter: <b>@packetfence</b> / identi.ca: <b>@plaxx</b></p>
+    <p>delicious: <b>plaxxx</b> / linkedin: <b>olivier.bilodeau</b></p>
+</div>
+
+<div class="slide">
+    <h1>References</h1>
+    <p class="hidden">TODO</p>
+    <ul>
+      <li>PacketFence
+        <ul>
+          <li><a href="http://www.packetfence.org">Project Website, http://www.packetfence.org</a></li>
+          <li><a href="http://mtn.inverse.ca">Source Code Repository, http://mtn.inverse.ca</a></li>
+          <li><a href="http://www.packetfence.org/bugs">Issue tracker, http://www.packetfence.org/bugs</a></li>
+        </ul>
+      </li>
+      <li>802.1X<ul>
+        <li><a href="http://en.wikipedia.org/wiki/IEEE_802.1X">Wikipedia: 802.1X, http://en.wikipedia.org/wiki/IEEE_802.1X</a></li>
+        <li><a href="http://www.cs.umd.edu/~waa/1x.pdf">An Initial Security Analysis of the IEEE 802.1X Standard, http://www.cs.umd.edu/~waa/1x.pdf</a></li>
+        <li><a href="http://technet.microsoft.com/en-ca/library/cc512611.aspx">Mitigating the Threats of Rogue Machines — 802.1X or IPsec?, http://technet.microsoft.com/en-ca/library/cc512611.aspx</a></li>
+      </ul></li>
+      <li>Research
+        <ul>
+          <li><a href="http://www.cisco.com/en/US/docs/security/nac/appliance/support_guide/agntsprt.html#wp125743">Cisco NAC: No Agent for iOS, http://www.cisco.com/en/US/docs/security/nac/appliance/support_guide/agntsprt.html#wp125743</a></li>
+        </ul>
+      </li>
+      <li>Proxy Bypass
+        <ul>
+          <li><a href="http://www.packetfence.org/bugs/view.php?id=1035">Feature ticket, http://www.packetfence.org/bugs/view.php?id=1035</a></li>
+          <li><a href="http://www.squid-cache.org/Doc/config/ssl_bump/">Squid's SSL Bump, http://www.squid-cache.org/Doc/config/ssl_bump/</a></li>
+          <li><a href="http://wiki.squid-cache.org/Features/Redirectors">Squid's Redirectors, http://wiki.squid-cache.org/Features/Redirectors</a></li>
+        </ul>
+      </li>
+      <li>Important projects
+        <ul>
+          <li><a href="http://freeradius.org/">FreeRADIUS, http://freeradius.org/</a></li>
+          <li><a href="http://www.net-snmp.org/">Net-SNMP, http://www.net-snmp.org/</a></li>
+          <li>The others you already know about</li>
+        </ul>
+      </li>
+      <li>Tools
+        <ul>
+          <li><a href="http://www.yersinia.net/">yersinia: Comprehensive LAN attack tool, http://www.yersinia.net/</a></li>
+          <li><a href="http://code.kryo.se/iodine/">iodine: IP over DNS tunneling, http://code.kryo.se/iodine/</a></li>
+        </ul>
+      </li>
+    </ul>
+</div>
+
+</body>
+</html>
+
+<!--
+# vim: set shiftwidth=4:
+# vim: set tabstop=4:
+# vim: set expandtab:
+# vim: set backspace=indent,eol,start: -->

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//FR"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-CA">
+
+<head>
+    <title>FingerBank - Defcon19</title>
+    <meta name="copyright" content="Copyright &#169; 2011 Inverse inc." />
+    <meta name="duration" content="20" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="slidy/slidy.css" type="text/css" media="screen, projection, print" />
+    <link rel="stylesheet" href="slidy/fingerbank.css" type="text/css" media="screen, projection, print" />
+    <link rel="stylesheet" href="slidy/packetfence_print_speaker.css" type="text/css" media="print" />
+    <script src="slidy/slidy.js" type="text/javascript"> </script>
+</head>
+
+<body>
+<div class="background"></div>
+<div class="slide cover">
+    <h1>FingerBank - open DHCP fingerprints database</h1>
+    <p>no it's not about a bank of fingers...</p>
+</div>
+
+<div class="slide">
+    <h1>Presentation Plan</h1>
+    <ul>
+        <li>Device fingerprinting, passive fingerprinting, DHCP fingerprinting</li>
+        <li>Defensive use cases</li>
+        <li>Offensive use cases</li>
+        <li>FingerBank announcement</li>
+        <li>FingerBank's future</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Who I am</h1>
+    <img src="images/udrink_animation.gif" alt="udrink protocol" style="float:right" width="35%" />
+    <p>Olivier Bilodeau</p>
+    <ul>
+      <li>System architect working at Inverse inc</li>
+      <li>PacketFence lead developer since 2009</li>
+      <li>Teaching InfoSec to undergraduate in Montreal</li>
+      <li>...</li>
+      <li class="hidden">new father, Open Source nuts, enjoying CTFs a lot, android developer, brewing beer</li>
+    </ul>
+    <p>Social stuff</p>
+    <ul>
+      <li>twitter: <b>@packetfence</b> / identi.ca: <b>@plaxx</b></li>
+      <li>delicious: <b>plaxxx</b> / linkedin: <b>olivier.bilodeau</b></li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Device fingerprinting reminder</h1>
+    <p>Identifies software or hardware components</p>
+    <p>Various types</p>
+    <ul>
+        <li>Operating Systems</li>
+        <li>Devices</li>
+        <li>Browsers</li>
+        <li>Web Server</li>
+        <li>Web Applications</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Two approaches of gathering fingerprints</h1>
+    <ul>
+        <li>Active
+            <ul>
+                <li>Pros: On demand</li>
+                <li>Cons: Detectable, sometimes intrusive</li>
+            </ul>
+        </li>
+        <li>Passive
+            <ul>
+                <li>Pros: Stealth</li>
+                <li>Cons: not on demand</li>
+            </ul>
+        </li>
+
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Passive fingerprinting reminder</h1>
+    <ul>
+        <li>Networks are really noisy</li>
+        <li>Some protocols use broadcast</li>
+        <li>Sometimes you are in between</li>
+        <li>Just wait for the goods to come to you</li>
+        <li>Fingerprinting on the LAN...</li><li class="hidden">mDNS, TCP, ARP, DHCP, ...</li>
+        <li>Fingerprinting on the WAN...</li><li class="hidden">honeypots, firewall, routers</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>DHCP Fingerprinting reminder</h1>
+    <ul>
+      <li>DHCP
+        <ul>
+          <li>broadcast-based</li>
+          <li>on every LAN segment</li>
+        </ul>
+      </li>
+      <li class="hidden">aggregation infrastructure: IP Helpers (UDP Helper Address), easy to collect centrally</li>
+      <li class="hidden">Just add one helper to point to your fingerprinting tool</p>
+      <li>DHCP fingerprints
+        <ul>
+          <li>Easy to collect</li><li class="hidden">broadcast remember?</li>
+          <li>Rarely spoofed</li>
+          <li class="hidden">well, since you're here: it's controlled by /etc/dhclient.conf</li>
+        </ul>
+      </li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>DHCP Fingerprinting reminder (contd.)</h1>
+    <p>DHCP Elements to fingerprint</p>
+    <ul>
+        <li>DHCP retransmission timing</li>
+        <li class="hidden">
+            Several problems: 
+                RFC not followed (2^x delayification)
+                actual vs in packet differs
+                invalid secs field user (1 sec == 256)
+        </li>
+        <li>IP TTL on DHCP packets</li>
+        <li class="hidden">Problems: Some relay implementation will modify the TTL</li>
+        <li>DHCP Options (55: requested parameters, 60: vendor id, ...)</li>
+        <li class="hidden">Option 60 even misleading sometimes. Win ME labeled as MSFT98</li>
+        <li>Number and order of option 55 is particularly precise and interesting</li>
+        <li class="hidden">PF: what we use and it's quite reliable</li>
+        <li class="hidden">Satori's format does more</li>
+    </ul>
+    <p class="smaller">See the slides of the <i>Using DHCP for Passive OS Identification by David LaPorte and Eric Kollman at BlackHat Japan 2007</i> presentation for more details on the topic.</p>
+    <p class="hidden">URL in the last slide</p>
+</div>
+
+<div class="slide">
+    <h1>DHCP Fingerprinting reminder (contd.)</h1>
+    <p>With simple option 55 fingerprints</p>
+    <img src="images/dhcp-option55.png" alt="DHCP Option 55 Wireshark capture example"
+      style="float:right" />
+    <ul>
+        <li>160 different and unique OS / devices identified</li>
+        <li>Covering
+          <ul>
+            <li>Traditional OS (Win, Mac, Linuxes, Unixes)</li>
+            <li>Corporate devices (VoIP, Printers, Routers, APs, Storage)</li>
+            <li>Consumers devices (Home routers, Gaming consoles, smartphones, tablets)</li>
+            <li>...</li><li class="hidden">thin clients, UPS, inventory tools, flukes, etc.</li>
+            <li class="hidden">switches fingerprint! who uses DHCP for that?</li>
+          </ul>
+        </li>
+        <li class="hidden">Some overlap (Vista or Win7 / iPhone or iPad)</li>
+        <li class="hidden">Some clashes (Blackberry, OEM Wireless Router)</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Defensive Use Cases</h1>
+    <ul>
+        <li>Easy LAN Operating System Inventory
+        <ul>
+          <li>Even more powerful if IP-Helpers use DHCP Option 82</li>
+          <li class="hidden">Cisco stuff that adds switchport/vlan info to dhcp in transit</li>
+        </ul>
+        <img src="images/pf-dhcp.png" alt="OS identification through DHCP fingerprints example" />
+        </li>
+        <li>Firewall / NAC integration to blacklist end-of-life OS
+          <ul>
+            <li>ex: Win 2000 and earlier</li>
+          </ul>
+        </li>
+        <p class="hidden">or BackTrack? but not sure if we have that</p>
+        <p class="hidden">PacketFence does this</p>
+        <p class="hidden">p0f has been integrated into pf (firewall) to do a similar thing</p>
+        <li>NAC integration to automatically allow dumb devices (shh!)</li>
+        <p class="hidden">
+            Like printers, VoIP, and any other browser-less IP device.
+            Yes, it's stupid since it's client controlled but users find it sooo convenient.
+        </p>
+        <p class="hidden">
+            Note to pentesters: We [PacketFence] are not the only ones doing this.
+            Avoid at least the backtrack fingerprint and mimic a Win32 one!
+        </p>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Offensive Use Cases</h1>
+    <ul class="incremental">
+        <li>Stealth LAN Recon!</li>
+        <p class="hidden">Identify OS and IPs on the same segment as you are</p>
+        <p class="hidden">Delivery joke</p>
+        <li>...</li>
+        <li>Any other ideas?</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Why FingerBank?</h1>
+    <ul>
+      <li class="hidden">There are User-Agent databases out there</li>
+      <li class="hidden">There are snort signature databases out there</li>
+      <li class="hidden">What about DHCP Fingerprints?</li>
+      <li>Consolidate information hidden in silos</li>
+      <li class="hidden">well, yes they were already open databases but hidden in other projects</p>
+      <li>Regroup communities that would benefit from sharing this information</li>
+      <li>Raise awareness about this easy to use technique</li>
+      <li>... we have a ton of anonymous fingerprints we need help identify</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>What is FingerBank?</h1>
+    <p>A website dedicated to sharing DHCP fingerprint and tools.</p>
+    <ul>
+        <li>Two extensive DHCP fingerprint databases (PacketFence, Satori)</li>
+        <li>DHCP fingerprinting tools</li>
+        <li class="hidden">for now, Satori (win-based) and PF's own pfdhcplistener (badly integrated at the moment)</li>
+        <li>A community (mailing list)</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Who's backing FingerBank?</h1>
+    <ul>
+      <li>Eric Kollman - Satori</li><li class="hidden">doing the research</li>
+      <li>David LaPorte - PacketFence original founder</li><li class="hidden">original idea</li>
+      <li>Olivier Bilodeau - PacketFence lead developer</li>
+      <li>Inverse inc.</li><li class="hidden">for allowing me to work on this at work</li>
+    </ul>
+</div>
+
+<!-- TODO include fingerbank screenshot? -->
+
+<div class="slide">
+    <h1>FingerBank's future</h1>
+    <p>Based on community participation</p>
+    <ul>
+        <li>Improve fingerprint sharing tools</li>
+        <li>Consolidate data formats</li>
+        <li>Room for new / better tools</li>
+        <li class="hidden">including a pentester oriented one</li>
+        <li>Support and share about new passive fingerprint types?</li>
+        <li class="hidden">fingerbank: generic name</li>
+        <li class="hidden">we'll see</li>
+    </ul>
+</div>
+
+<div class="slide cover">
+    <h1>That's it</h1>
+    <p>I hope you enjoyed! See you in the debriefing room.</p>
+    <p>&nbsp;</p>
+    <p>twitter: <b>@packetfence</b> / identi.ca: <b>@plaxx</b></p>
+    <p>delicious: <b>plaxxx</b> / linkedin: <b>olivier.bilodeau</b></p>
+</div>
+
+<div class="slide">
+    <h1>References</h1>
+    <ul>
+        <li>DHCP Fingerprinting
+            <ul>
+                <li><a href="http://myweb.cableone.net/xnih/download/bh-japan-laporte-kollmann-v8.ppt">Using DHCP for Passive OS Identification, BlackHat Japan 2007, David LaPorte, Eric Kollmann, http://myweb.cableone.net/xnih/download/bh-japan-laporte-kollmann-v8.ppt</a></li>
+            </ul>
+        </li>
+        <li>Users of current DHCP Fingerprint databases
+            <ul>
+               <li><a href="http://www.packetfence.org">PacketFence, http://www.packetfence.org</a></li>
+               <li><a href="http://myweb.cableone.net/xnih/">Satori, http://myweb.cableone.net/xnih/</a></li>
+            </ul>
+        </li>
+        <li>Other fingerprinting tools
+            <ul>
+                <li><a href="http://www.nmap.org/">nmap, http://www.nmap.org/</a></li>
+                <li><a href="http://blindelephant.sourceforge.net/">Blind Elephant, Web Application Fingerprinter, http://blindelephant.sourceforge.net/</a></li>
+                <li><a href="http://lcamtuf.coredump.cx/p0f.shtml">p0f, Passive TCP/IP fingerprinting, http://lcamtuf.coredump.cx/p0f.shtml</a></li>
+                <li><a href="http://www.gomor.org/bin/view/Sinfp/WebHome">SinFP, Active or Passive TCP/IP fingerprinting, http://www.gomor.org/bin/view/Sinfp/WebHome</a></li>
+                <li><a href="http://www.w4g.org/fingerprinting.html">Fingerprinting within OpenBSD's PF, http://www.w4g.org/fingerprinting.html</a></li>
+            </ul>
+        </li>
+        <li>Inspiration
+            <ul>
+                <li><a href="http://www.zytrax.com/tech/web/browser_ids.htm">Browser ID Strings, http://www.zytrax.com/tech/web/browser_ids.htm</a></li>
+                <li><a href="http://www.emergingthreats.net">Emerging Threats, http://www.emergingthreats.net</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
+
+<!--
+# vim: set shiftwidth=4:
+# vim: set tabstop=4:
+# vim: set expandtab:
+# vim: set backspace=indent,eol,start: -->

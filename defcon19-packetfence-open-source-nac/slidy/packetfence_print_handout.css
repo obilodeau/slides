@@ -1,0 +1,8 @@
+
+/*
+ * Don't show speaker notes on printed media
+ * You might need to add 
+ */
+p.hidden, li.hidden {
+  display: none;
+}
