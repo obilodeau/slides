@@ -20,7 +20,8 @@ NorthSec 2016::
 
   * link:{gs}/2016-05-19_northsec/malboxes.html[Applying DevOps Principles for Better Malware Analysis]
     by link:{twob}[Olivier Bilodeau] and link:{twhg}[Hugo Genesse]
-    [ link:{gs}/2016-05-19_northsec/OlivierBilodeau_HugoGenesse-Malboxes.pdf[PDF] ]
+    [ https://www.youtube.com/watch?v=rfmUcYGGrls[video],
+    link:{gs}/2016-05-19_northsec/OlivierBilodeau_HugoGenesse-Malboxes.pdf[PDF] ]
 
 AtlSecCon 2016::
 
