@@ -6,6 +6,7 @@
 :theme: flask
 :gs: http://gosecure.github.io/presentations
 :twob: https://twitter.com/obilodeau
+:twmcpc: https://twitter.com/MasarahClouston
 :twtd: https://twitter.com/nyx__o
 :twhg: https://twitter.com/hugospns
 :twml: https://twitter.com/marc_etienne_
@@ -15,6 +16,25 @@ by Olivier Bilodeau, https://twitter.com/obilodeau[@obilodeau], https://github.c
 NOTE: PDFs are a degraded experience over the linked (HTML) slide decks.
 
 == Presentations
+
+Botconf 2016::
+
+  * https://www.botconf.eu/wp-content/uploads/2016/11/PR08-MOOSE-BILODEAU-PAQUET-CLOUSTON.pdf[
+    Attacking Linux/Moose 2.0 Unraveled an EGO MARKET]
+    by link:{twmcpc}[Masarah Paquet-Clouston] and link:{twob}[Olivier Bilodeau]
+
+BlackHat Europe 2016::
+
+  * https://www.blackhat.com/docs/eu-16/materials/eu-16-Paquet-Clouston-Ego-Market_When-Greed-for-Fame-Benefits-Large-Scale-Botnets.pdf[
+    EGO MARKET: When Greed For Fame Benefits Large-Scale Botnets]
+    by link:{twmcpc}[Masarah Paquet-Clouston] and link:{twob}[Olivier Bilodeau]
+    [ https://www.youtube.com/watch?list=PLH15HpR5qRsXcnfTOLOA3yYSd0CmYwOHS&v=9pmKj0P9_ow[video],
+    http://gosecure.net/2016/11/02/exposing-the-ego-market-the-cybercrime-performed-by-the-linux-moose-botnet/[blog post],
+    http://gosecure.net/wp-content/uploads/2016/11/Ego-Market_When-Greed-for-Fame-Benefits-Large-Scale-Botnets.pdf[paper]
+    ]
+
+// TODO SecTor
+// TODO 44Con
 
 NorthSec 2016::
 
@@ -54,7 +74,9 @@ ISOI XV::
 Virus Bulletin 2015::
 
   * https://eset.github.io/slides/2015-10-01_virusbulletin/linux-moose-endangered-or-extinct.html[Linux/Moose endangered or extinct? An update on this atypical embedded Linux botnet]
-    [ https://eset.github.io/slides/2015-10-01_virusbulletin/linux-moose-endangered-or-extinct.pdf[PDF] ]
+    [ https://www.youtube.com/watch?v=sl0Phinz1HU[video],
+    https://eset.github.io/slides/2015-10-01_virusbulletin/linux-moose-endangered-or-extinct.pdf[PDF]
+    ]
 
 NorthSec 2015::
 
@@ -131,6 +153,7 @@ Hackfest 2010::
     802.1X: Broken dreams?] (French)
 
 == Appearances
+// TODO complete missing entries
 
 Twit Network::
 
@@ -138,6 +161,9 @@ Twit Network::
 
 == Publications
 
+* *EGO MARKET*, _How we attacked the Linux/Moose botnet and discovered the
+ego market of buying social media followers and likes_,
+http://gosecure.net/wp-content/uploads/2016/11/Ego-Market_When-Greed-for-Fame-Benefits-Large-Scale-Botnets.pdf
 * *Linux/Moose*, _embedded MIPS and ARM malware targeting routers with a payload
 doing social network fraud_,
 http://www.welivesecurity.com/wp-content/uploads/2015/05/Dissecting-LinuxMoose.pdf
