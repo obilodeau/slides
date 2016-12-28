@@ -58,7 +58,9 @@ OWASP Montreal January 2016::
 Botconf 2015::
 
   * https://eset.github.io/slides/2015-12-04_botconf/a-moose-once-bit-my-honeypot.html[A Moose Once Bit My Honeypot - A Story of an Embedded Linux Botnet]
-    [ https://eset.github.io/slides/2015-12-04_botconf/a-moose-once-bit-my-honeypot.pdf[PDF] ]
+    [ https://www.youtube.com/watch?v=-mCQvW77uBM[video],
+    https://eset.github.io/slides/2015-12-04_botconf/a-moose-once-bit-my-honeypot.pdf[PDF]
+    ]
 
 Hackfest 2015::
 
