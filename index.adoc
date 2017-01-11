@@ -20,14 +20,13 @@ NOTE: PDFs are a degraded experience over the linked (HTML) slide decks.
 Botconf 2016::
 
   * https://www.botconf.eu/wp-content/uploads/2016/11/PR08-MOOSE-BILODEAU-PAQUET-CLOUSTON.pdf[
-    Attacking Linux/Moose 2.0 Unraveled an EGO MARKET]
-    by link:{twmcpc}[Masarah Paquet-Clouston] and link:{twob}[Olivier Bilodeau]
+    Attacking Linux/Moose 2.0 Unraveled an EGO MARKET] with link:{twmcpc}[Masarah Paquet-Clouston]
 
 BlackHat Europe 2016::
 
   * https://www.blackhat.com/docs/eu-16/materials/eu-16-Paquet-Clouston-Ego-Market_When-Greed-for-Fame-Benefits-Large-Scale-Botnets.pdf[
     EGO MARKET: When Greed For Fame Benefits Large-Scale Botnets]
-    by link:{twmcpc}[Masarah Paquet-Clouston] and link:{twob}[Olivier Bilodeau]
+    with link:{twmcpc}[Masarah Paquet-Clouston]
     [ https://www.youtube.com/watch?list=PLH15HpR5qRsXcnfTOLOA3yYSd0CmYwOHS&v=9pmKj0P9_ow[video],
     http://gosecure.net/2016/11/02/exposing-the-ego-market-the-cybercrime-performed-by-the-linux-moose-botnet/[blog post],
     http://gosecure.net/wp-content/uploads/2016/11/Ego-Market_When-Greed-for-Fame-Benefits-Large-Scale-Botnets.pdf[paper]
@@ -38,27 +37,26 @@ BlackHat Europe 2016::
 44Con 2016::
 
   * Workshop: Hunting Linux Malware for Fun and $flags
-    by link:{twml}[Marc-Etienne M.Léveillé] and link:{twob}[Olivier Bilodeau] [ https://videos.44con.com/187676320[video] ]
-  * Malboxes Lightning Talk (22 minutes)
-    by link:{twob}[Olivier Bilodeau] [ https://videos.44con.com/185322203[video] ]
+    with link:{twml}[Marc-Etienne M.Léveillé] [ https://videos.44con.com/187676320[video] ]
+  * Malboxes Lightning Talk (22 minutes) [ https://videos.44con.com/185322203[video] ]
 
 NorthSec 2016::
 
   * link:{gs}/2016-05-19_northsec/malboxes.html[Applying DevOps Principles for Better Malware Analysis]
-    by link:{twob}[Olivier Bilodeau] and link:{twhg}[Hugo Genesse]
+    with link:{twhg}[Hugo Genesse]
     [ https://www.youtube.com/watch?v=rfmUcYGGrls[video],
     link:{gs}/2016-05-19_northsec/OlivierBilodeau_HugoGenesse-Malboxes.pdf[PDF] ]
 
 AtlSecCon 2016::
 
   * link:{gs}/2016-04-07_atlseccon/internet-of-threats.html[Internet of {Things,Threats}]
-    by link:{twob}[Olivier Bilodeau] and ESET's link:{twtd}[Thomas Dupuy]
+    with ESET's link:{twtd}[Thomas Dupuy]
     [ link:{gs}/2016-04-07_atlseccon/OlivierBilodeau_ThomasDupuy-Internet_of_Threats.pdf[PDF] ]
 
 OWASP Montreal January 2016::
 
   * link:{gs}/2016-01-20_owasp-mtl/internet-of-threats.html[Internet of {Things,Threats}]
-    by link:{twob}[Olivier Bilodeau] and ESET's link:{twtd}[Thomas Dupuy]
+    with ESET's link:{twtd}[Thomas Dupuy]
     [ link:{gs}/2016-01-20_owasp-mtl/internet-of-threats.pdf[PDF] ]
 
 Botconf 2015::
