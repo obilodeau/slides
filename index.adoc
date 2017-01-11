@@ -17,10 +17,13 @@ NOTE: PDFs are a degraded experience over the linked (HTML) slide decks.
 
 == Presentations
 
+// Montrehack workshop
+
 Botconf 2016::
 
   * https://www.botconf.eu/wp-content/uploads/2016/11/PR08-MOOSE-BILODEAU-PAQUET-CLOUSTON.pdf[
     Attacking Linux/Moose 2.0 Unraveled an EGO MARKET] with link:{twmcpc}[Masarah Paquet-Clouston]
+  * Malboxes Lightning Talk (3 minutes)
 
 BlackHat Europe 2016::
 
