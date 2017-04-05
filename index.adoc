@@ -17,7 +17,18 @@ NOTE: PDFs are a degraded experience over the linked (HTML) slide decks.
 
 == Presentations
 
-// Montrehack workshop
+OWASP Montreal Workshop April 2017::
+
+  * link:2017-04-04_how-not-to-suck-at-ctfs/[How [not\] to suck at CTFs]
+    [
+    https://github.com/obilodeau/slides/blob/master/2017-04-04_how-not-to-suck-at-ctfs/slides.adoc[source],
+    link:2017-04-04_how-not-to-suck-at-ctfs/owasp-mtl-workshop-april-2017.pdf[PDF]
+    ]
+
+// TODO OWASP Mtl NorthSec
+// https://docs.google.com/presentation/d/1g7FG7LKuR2Iblz-xnHjuElacrHHuJJTMS0uAGhyve_o/edit?usp=sharing
+// TODO OWASP Qc
+// TODO Montrehack workshop (x2)
 
 Botconf 2016::
 

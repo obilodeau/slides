@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="author" content="Olivier Bilodeau"><title>How [not] to suck at CTF</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/owasp.css" id="theme"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script><link rel="stylesheet" href="owasp.css"></head><body><div class="reveal"><div class="slides"><section class="title"><h1>How [not] to suck at CTF</h1><p class="author"><small>Olivier Bilodeau</small></p></section><section id="_warning"><h2>Warning</h2><div class="paragraph"><p>You are about to enter a mystical universe filled with inconsistencies and
+various types of abuse.</p></div>
+<div class="paragraph"><p>You have been warned.</p></div></section>
+<section data-background-image="images/mystical.jpg" data-background-size="contain"></section>
+<section id="_avertissement"><h2>Avertissement</h2><div class="paragraph"><p>Présentation surchargée d&#8217;anglicismes!</p></div>
+<div class="paragraph"><p><span class="image"><img src="images/loi101-fail.png" alt="loi101 fail"></span></p></div>
+<aside class="notes"><div class="paragraph"><p>1st: parce que je sais pas comment traduire ces termes.
+2nd parce que j&#8217;ai pas envie de parler de capturer des drapeaux et de faire des jeux de bidouilleurs.</p></div></aside></section>
+<section id="_avertissement_2"><h2>Avertissement</h2><div class="ulist"><ul><li><p>Stressez pas a prendre des notes de tools, y&#8217;a pas de contenu pertinent
+dans cette présentation.</p></li></ul></div></section>
+<section id="__whoami"><h2>$ whoami</h2><div class="ulist"><ul><li><p>Cybersecurity Researcher at GoSecure
+<span class="image right"><img src="images/nsec_badge.jpg" alt="nsec badge" width="250"></span></p></li><li><p>Co-founder MontréHack (hands-on security workshops)</p></li><li><p>VP Training and Hacker Jeopardy at NorthSec
+<span class="image"><img src="images/gosecure-logo.png" alt="gosecure logo" width="150"></span>
+<span class="image"><img src="images/nsec.png" alt="nsec" width="250"></span></p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Previously</p><div class="ulist"><ul><li><p>Malware Research, Infosec lecturer (ETS)</p></li><li><p>Infosec developer, network admin, linux system admin</p></li></ul></div></li><li><p>Speaker: HackFest, BlackHat Europe, VirusBulletin, Botconf, DerbyCon, Defcon, etc.</p></li><li><p>Montrehack: monthly events since 4 years</p></li><li><p>NorthSec: I have badges to give for questions at the end</p></li></ul></div></aside></section>
+<section id="_ctf_experience"><h2>CTF Experience</h2><div class="paragraph"><p>I&#8217;m off the Previous Generation of CTF players</p></div>
+<div class="ulist"><ul><li><p>Founder Amish Security</p></li><li><p>Founder CISSP Groupies</p></li></ul></div>
+<div class="paragraph"><p><span class="image"><img src="images/AmishSec.png" alt="AmishSec" width="20%"></span> <span class="image"><img src="images/groupies.png" alt="groupies" width="20%"></span></p></div>
+<aside class="notes"><div class="paragraph"><p>more on the generations concept that later</p></div></aside></section>
+<section id="_anonymous"><h2>Anonymous</h2><div class="paragraph"><p><span class="image"><img src="images/groupies-anon.png" alt="groupies anon"></span></p></div></section>
+<section id="_troll"><h2>Troll</h2><div class="paragraph"><p><span class="image"><img src="images/groupies-trollies.png" alt="groupies trollies"></span></p></div></section>
+<section id="_monocle"><h2>Monocle</h2><div class="paragraph"><p><span class="image"><img src="images/groupies-monocle.png" alt="groupies monocle"></span></p></div></section>
+<section id="_nyan_cat"><h2>Nyan cat</h2><div class="paragraph"><p><span class="image"><img src="images/groupies-ncat.png" alt="groupies ncat"></span></p></div></section>
+<section id="_grognons"><h2>Grognons</h2><div class="paragraph"><p><span class="image"><img src="images/groupies-grumpies.png" alt="groupies grumpies"></span></p></div></section>
+<section id="_cuir_cuir_cuir_moustache"><h2>Cuir cuir cuir moustache</h2><div class="paragraph"><p><span class="image"><img src="images/groupies-cuircuir.png" alt="groupies cuircuir"></span></p></div></section>
+<section id="_un_ctf_c_est_quoi" class="topic" data-background-color="#da291c"><h2>un CTF c&#8217;est quoi?</h2></section>
+<section id="_ctf_capture_the_flags" class="topic" data-background-color="black"><h2>CTF &#8658; Capture The Flags</h2></section>
+<section id="_non_pas_comme_a"><h2>Non pas comme ça&#8230;&#8203;</h2><div class="imageblock" style=""><img src="images/fps-ctf.jpg" alt="fps ctf" width="100%"></div></section>
+<section id="_plutt_comme_a"><h2>Plutôt comme ça</h2><div class="imageblock" style=""><img src="images/defcon-ctf.jpg" alt="defcon ctf" width="100%"></div>
+<aside class="notes"><div class="paragraph"><p>mais avec plus de diversité culturelle.. ouin.. p-e pas.</p></div></aside></section>
+<section id="_dans_les_faits_ce_sont"><h2>Dans les faits ce sont&#8230;&#8203;</h2><div class="ulist"><ul><li><p>hacking games</p></li><li><p>hacking puzzles</p></li><li><p>computer science puzzle</p></li><li><p>nerd puzzles</p></li></ul></div>
+<aside class="notes"><div class="paragraph"><p>Combien ici a main levé en on déjà fait?.</p></div></aside></section>
+<section id="_myth_ctf_are_about_information_security" class="topic" data-background-color="#da291c"><h2>Myth: CTF are about information security</h2></section>
+<section id="_comment_a_marche"><h2>comment ça marche?</h2><div class="ulist"><ul><li class="fragment"><p>des gens créatifs et généreux font des scénarios et défis</p></li><li class="fragment"><p>les participants arrivent (ou se loggent)</p></li><li class="fragment"><p>on cherche des flags</p></li><li class="fragment"><p>on soumet les flags à un système de pointage</p></li></ul></div></section>
+<section data-background-image="images/scoreboard-ictf.png" data-background-size="contain"></section>
+<section id="_les_fameux_flags"><h2>Les "fameux" flags</h2><div class="ulist"><ul><li class="fragment"><p>parfois sous la forme FLAG:abcdefgh&#8230;&#8203;</p></li><li class="fragment"><p>sinon {FLAG:...}</p></li><li class="fragment"><p>ou encore The flag is: abcdefgh&#8230;&#8203;</p></li><li class="fragment"><p>ou juste: 112f3a99b283a4e1788dedd8e0e5d35375c33747</p></li><li class="fragment"><p>ou même: ceciestunfantastiqueflag</p></li><li class="fragment"><p>mais après ont les voit partout!</p></li></ul></div>
+<aside class="notes"><div class="paragraph"><p>Pas mettre 'the flag is', lol</p></div></aside></section>
+<section id="__em_la_vie_est_un_ctf_em" class="topic" data-background-color="black"><h2><em>La vie est un CTF</em></h2><div class="paragraph"><p>&#8201;&#8212;&#8201;Benjamin Vanheuverzwijn</p></div></section>
+<section id="_pourquoi_participer"><h2>Pourquoi participer?</h2><div class="ulist"><ul><li class="fragment"><p>apprendre!</p></li><li class="fragment"><p>sortir de sa zone de confort, constamment!</p></li><li class="fragment"><p>se trouver une job le fun</p></li><li class="fragment"><p>trouver du talent passionné</p></li><li class="fragment"><p>les contacts</p></li></ul></div>
+<aside class="notes"><div class="paragraph"><p>si vous voulez lui parler c&#8217;est lui</p></div></aside></section>
+<section class="topic" data-background-color="black"><h3><em>Plus de la moitié des chercheurs dans notre équipe ont été rencontrés dans des compétitions de type "CTF". Le contexte de compétition nous permet rapidement de voir les compétences techniques et sociales d&#8217;un candidat. &#8230;&#8203;</em></h3></section>
+<section class="topic" data-background-color="black"><h3><em>Plusieurs de nos chercheurs ont des problèmes de comportement et de consommation d&#8217;alcool mais c&#8217;est tout de même grâce à eux que nous pouvons nous vanter d&#8217;avoir la meilleure équipe de recherche en sécurité au Québec.</em></h3><div class="paragraph"><p>&#8201;&#8212;&#8201;Pierre-Marc Bureau en 2013 chez ESET Canada</p></div>
+<aside class="notes"><div class="paragraph"><p>à l&#8217;époque chez ESET</p></div></aside></section>
+<section data-background-image="images/pmb.jpg" data-background-size="contain"></section>
+<section id="_variantes"><h2>Variantes</h2><div class="ulist"><ul><li><p>Cyberwar (managed, unmanaged)</p></li><li><p>Red vs Blue</p></li><li><p>Jeopardy board</p></li><li><p>Javascript-RPG</p></li><li><p>Batshit insane (iCTF)</p></li><li><p>&#8230;&#8203;</p></li></ul></div></section>
+<section id="_jeopardy_board"><h2>Jeopardy Board</h2><div class="paragraph"><p><span class="image"><img src="images/ctf-board.png" alt="ctf board" height="100%"></span></p></div></section>
+<section id="_javascript_rpg"><h2>Javascript RPG</h2><div class="paragraph"><p><span class="image"><img src="images/ctf-rpg.png" alt="ctf rpg" width="100%"></span></p></div></section>
+<section data-background-image="images/ctf-northsec.png" data-background-size="contain"></section>
+<section id="_perks"><h2>Perks</h2><div class="ulist"><ul><li><p>on-site || off-site || hybrid</p></li><li><p>besoin d&#8217;affiliation académique</p></li><li><p>limite de membres</p></li></ul></div></section>
+<section id="_exemples_de_sujets_explors"><h2>Exemples de sujets explorés</h2><div class="ulist"><ul><li><p>Exploitation</p><div class="ulist"><ul><li><p>Web</p></li><li><p>System</p></li><li><p>hw</p></li></ul></div></li></ul></div></section>
+<section id="_sujets_explors_suite"><h2>Sujets explorés (suite)</h2><div class="ulist"><ul><li><p>Cryptographie</p><div class="ulist"><ul><li><p>1st gen: craptographie, enigma</p></li><li><p>2nd gen: hashs, puzzles, small-RSA, password cracking, etc.</p></li><li><p>current-gen: crypto-oracle, big int maths</p></li></ul></div></li></ul></div>
+<aside class="notes"><div class="paragraph"><p>Tout ça est biaisé selon mes participations.</p></div></aside></section>
+<section id="_sujets_explors_suite_2"><h2>Sujets explorés (suite)</h2><div class="ulist"><ul><li><p>reverse-engineering</p></li><li><p>forensic</p></li><li><p>réseautique</p></li><li><p>stégano</p></li></ul></div></section>
+<section id="_sujets_explors_suite_3"><h2>Sujets explorés (suite)</h2><div class="ulist"><ul><li><p>recon</p></li><li><p>system hardening</p></li><li><p>algo</p></li><li><p>lock-pick</p></li><li><p>specialized platforms (Android, iOS, haiku, BSDs, VMS, &#8230;&#8203;)</p></li></ul></div></section>
+<section id="_mais_attention" class="topic" data-background-color="black"><h2>mais attention!</h2><div class="paragraph"><p>C&#8217;est de plus en plus dur</p></div>
+<aside class="notes"><div class="paragraph"><p>Le niveau augmente d&#8217;années en années parce que les participants, la relève et l&#8217;insconscient collectifs sont de plus en plus fort. (avant: crypto = monosubstition, maintenant crypto = crypt-oracle)</p></div></aside></section>
+<section id="_tout_le_monde_a_une_histoire" class="topic" data-background-color="#da291c"><h2>Tout le monde a une histoire</h2><div class="paragraph"><p>La mienne a commencé a la Boule de cristal du CRIM</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Un CTF peu tradionnel, y&#8217;a pas de mot..</p></li><li><p>On arrive avec des boites patchés</p></li><li><p>faut owner des boites patchés en 76h (remember "games")</p></li><li><p>desfois ils droppent des boites ultra vulnerables (vieux NT4)</p></li><li><p>on se les chicanes via nos metasploits autopwn</p></li></ul></div></aside></section>
+<section id="_cipher_ctf_4" class="topic" data-background-color="black"><h2>Cipher CTF 4</h2><div class="paragraph"><p>Hey les enfants vous êtes a un vrai CTF</p></div></section>
+<section data-background-image="images/cipher4.JPG" data-background-size="contain">
+<aside class="notes"><div class="ulist"><ul><li><p>fini le windows</p></li><li><p>fini les tools standards qui marchent</p></li></ul></div></aside></section>
+<section id="_ensuite_un_bel_ge"><h2>Ensuite, un bel âge</h2><div class="ulist"><ul><li><p>HackUS, Hackfest</p></li><li><p>Defcon Quals 18</p></li><li><p>iCTF, CSAW</p></li><li><p>&#8230;&#8203; (iterate)</p></li><li><p>hack.lu</p></li><li><p>plaidctf</p></li><li><p>mozilla ctf</p></li><li><p>NorthSec</p></li></ul></div></section>
+<section data-background-image="images/csaw-young-hacker.JPG" data-background-size="contain">
+<aside class="notes"><div class="ulist"><ul><li><p>a CSAW, ma fille s&#8217;y met</p></li></ul></div></aside></section>
+<section id="_ictf" data-background-image="images/ictf-2010.jpg" data-background-size="contain"><h2>iCTF</h2></section>
+<section id="_notre_participation_dgnra" data-background-image="images/overflow01.jpg" data-background-size="contain"><h2>Notre participation dégénéra</h2></section>
+<section data-background-image="images/overflow02.jpg" data-background-size="contain"></section>
+<section data-background-image="images/overflow03.jpg" data-background-size="contain"></section>
+<section data-background-image="images/overflow04.jpg" data-background-size="contain"></section>
+<section id="_tellement_que"><h2>Tellement que&#8230;&#8203;</h2><div class="paragraph"><p>le "Bilodeau" peak&#8201;&#8212;&#8201;hackfest 2011</p></div>
+<div class="imageblock" style=""><img src="images/bilodeaupeak.png" alt="bilodeaupeak" height="500px"></div></section>
+<section id="_pour_perdre_tout_ctf" class="topic" data-background-color="#da291c"><h2>Pour perdre tout CTF&#8230;&#8203;</h2></section>
+<section id="_rester_seul"><h2>Rester seul</h2><div class="imageblock" style=""><img src="images/forever-alone.gif" alt="forever alone" width="800px"></div></section>
+<section id="_skiddie_tools_only"><h2>skiddie tools only</h2><div class="ulist"><ul><li><p>nmap</p></li><li><p>metasploit</p></li><li><p>Backtrack / Kali</p></li></ul></div></section>
+<section id="_never_read_write_ups" class="topic" data-background-color="#da291c"><h2>Never read write-ups!</h2><aside class="notes"><div class="paragraph"><p>definition
+Never try to reproduce them.</p></div></aside></section>
+<section id="_never_train" class="topic" data-background-color="black"><h2>Never train.</h2><div class="paragraph"><p>Parce que le talent c&#8217;est inné</p></div></section>
+<section id="_never_bookmark_good_tools" class="topic" data-background-color="black"><h2>Never bookmark good tools</h2><div class="paragraph"><p>or never share them with your team</p></div></section>
+<section id="_communication" class="topic" data-background-color="black"><h2>Communication</h2><div class="ulist"><ul><li class="fragment"><p>Ne jamais parler aux autres équipes pour discuter des épreuves</p></li><li class="fragment"><p>Ne jamais participer sur IRC, Slack (RingZer0, Northern Coallition)</p></li></ul></div></section>
+<section id="_ne_jamais_imiter_ses_hros" class="topic" data-background-color="black"><h2>Ne jamais imiter ses héros</h2></section>
+<section data-background-image="images/init_null-dino.jpg" data-background-size="contain"></section>
+<section id="_ne_jamais_sortir_des_sentiers_battus" class="topic" data-background-color="black"><h2>Ne jamais sortir des sentiers battus</h2></section>
+<section data-background-image="images/hf2012-se-stolen-flag.jpg" data-background-size="contain"></section>
+<section id="_jamais_a_non_plus" class="topic" data-background-color="black" data-background-image="images/gin-cafeteriere.jpg" data-background-size="contain"><h2>Jamais ça non plus&#8230;&#8203;</h2>
+<aside class="notes"><div class="paragraph"><p>mais ça c&#8217;est un vrai conseil</p></div></aside></section>
+<section id="_never_code_or_learn_to_code" class="topic" data-background-color="black"><h2>Never code or learn to code</h2></section>
+<section id="_jamais_se_fier_aux_outils_ou_aux_notes_des_autres" class="topic" data-background-color="black"><h2>Jamais se fier aux outils ou aux notes des autres</h2><div class="ulist"><ul><li><p><a href="http://pinboard.com/u:plaxx/t:security" class="bare">http://pinboard.com/u:plaxx/t:security</a></p></li></ul></div></section>
+<section class="topic" data-background-color="black"><h3>Participer seulement si vous êtes certain de gagner!</h3><div class="paragraph"><p>On n&#8217;apprends pas en perdant.</p></div></section>
+<section id="_plus_srieusement" class="topic" data-background-color="black"><h2>Plus sérieusement</h2></section>
+<section id="_perdre_c_est_mieux" class="topic" data-background-color="black"><h2>perdre c&#8217;est mieux!</h2></section>
+<section id="_avoir_une_muse" class="topic" data-background-color="#da291c"><h2>Avoir une muse</h2></section>
+<section data-background-image="images/muse.jpg" data-background-size="contain">
+<aside class="notes"><div class="paragraph"><p>Trouvez la votre</p></div></aside></section>
+<section id="_trouver_vous_un_spot" class="topic" data-background-color="black"><h2>trouver vous un spot</h2><div class="paragraph"><p>N&#8217;importe lequel!&#8230;&#8203; Litéralement</p></div></section>
+<section><div class="imageblock" style=""><img src="images/foulab.jpg" alt="foulab" width="70%"></div>
+<aside class="notes"><div class="paragraph"><p>On est pas difficile. On fait des dons. Tant qu&#8217;on peut boire!</p></div>
+<div class="paragraph"><p>Présence physique &gt; présence en ligne &gt; pas présent</p></div></aside></section>
+<section data-background-image="images/foulab01.jpg" data-background-size="contain"></section>
+<section data-background-image="images/foulab02.jpg" data-background-size="contain"></section>
+<section data-background-image="images/foulab03.jpg" data-background-size="contain"></section>
+<section data-background-image="images/foulab04.jpg" data-background-size="contain"></section>
+<section id="_ne_pas_se_dcourager"><h2>Ne pas se décourager</h2><div class="imageblock" style=""><img src="images/despair.jpg" alt="despair" width="40%"></div>
+<aside class="notes"><div class="paragraph"><p>10 heures.</p></div></aside></section>
+<section id="_expliquer_son_challenge_a_ses_pairs" class="topic" data-background-color="black"><h2>Expliquer son 'challenge' a ses pairs</h2></section>
+<section id="_causes_dsesprs" class="topic" data-background-color="black"><h2>Causes désespérés</h2><div class="paragraph"><p>Avoir un département des causes désespérés.</p></div>
+<aside class="notes"><div class="paragraph"><p>Laurent a dit ça</p></div></aside></section>
+<section id="_soyez_proactifs_pour_batir_une_quipe" class="topic" data-background-color="#da291c"><h2>Soyez proactifs pour batir une équipe</h2><aside class="notes"><div class="paragraph"><p>Amish Security + Japan Overfl0w = Amish Overfl0w.
+NSec.</p></div></aside></section>
+<section id="_batissez_vous_un_toolchain"><h2>Batissez-vous un toolchain</h2><div class="ulist"><ul><li><p><a href="https://github.com/obilodeau/scratchpad" class="bare">https://github.com/obilodeau/scratchpad</a></p></li><li><p><a href="https://pinboard.in/u:plaxx/t:security" class="bare">https://pinboard.in/u:plaxx/t:security</a></p></li></ul></div>
+<aside class="notes"><div class="paragraph"><p>manque du stock un peu.</p></div></aside></section>
+<section data-background-image="images/scratchpad_1.png" data-background-size="contain"></section>
+<section data-background-image="images/scratchpad_2.png" data-background-size="contain"></section>
+<section data-background-image="images/pinboard.png" data-background-size="contain"></section>
+<section id="_perdre_aux_comps_difficiles"><h2>Perdre aux compés difficiles</h2><div class="paragraph"><p>Pour être meilleurs aux compés plus faciles</p></div>
+<div class="ulist"><ul><li><p>Développez des "réflexes"</p></li><li><p>Voyez venir les tendances</p></li></ul></div>
+<aside class="notes"><div class="paragraph"><p>forensic, cryptoracle
+donne la chance de se preparer aux autres compés avec les write-ups, etc.</p></div></aside></section>
+<section id="_realit" class="topic" data-background-color="black"><h2>Realité</h2><div class="paragraph"><p>Ce sont des exercices. Ce n&#8217;est pas réel. Il faut penser au-delà de
+ce qu&#8217;on voit [en entreprise] ou lit.</p></div></section>
+<section id="_admins" class="topic" data-background-color="black"><h2>Admins</h2><div class="paragraph"><p>Les 'admins' veulent que vous réussissiez.</p></div>
+<aside class="notes"><div class="paragraph"><p>mis des centaines d&#8217;heures
+veulent voir les gens reussir
+si vous avez qqchose, n&#8217;hesitez pas a leur montrer votre progres et leur parler</p></div></aside></section>
+<section id="_aller_plus_loin" class="topic" data-background-color="#da291c"><h2>Aller plus loin</h2><div class="paragraph"><p>et former la relève de nos équipes</p></div></section>
+<section id="_montrhack"><h2>Montréhack</h2><div class="ulist"><ul><li><p>3e lundi du mois</p></li><li><p><a href="http://montrehack.ca" class="bare">http://montrehack.ca</a></p></li></ul></div>
+<div class="paragraph"><p><span class="image"><img src="images/montrehack.png" alt="montrehack" width="40%"></span></p></div>
+<aside class="notes"><div class="paragraph"><p>Dans le cas de Montrehack c&#8217;est vraiment n&#8217;importe quoi mais ça marche!</p></div></aside></section>
+<section id="_hackfest_hackerspace"><h2>HackFest Hackerspace</h2><div class="ulist"><ul><li><p>4e jeudi du mois au Cégep de Sainte-Foy</p></li><li><p><a href="http://www.hackfest.ca/hackfest-community/hackerspace" class="bare">http://www.hackfest.ca/hackfest-community/hackerspace</a></p></li></ul></div>
+<div class="paragraph"><p><span class="image"><img src="images/hackfest-hackerspace.jpg" alt="hackfest hackerspace" width="70%"></span></p></div></section>
+<section id="_enfin_s_amuser"><h2>Enfin.. s&#8217;amuser!!!</h2><div class="paragraph"><p><span class="image"><img src="images/overflow05.jpg" alt="background"></span></p></div>
+<aside class="notes"><div class="paragraph"><p>raconter l&#8217;histoire</p></div></aside>
+<div class="quoteblock"><blockquote>Barman: La même chose? (quatre gin tonics)<br>
+[il sert&#8230;&#8203;]<br></blockquote></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>Barman: Vous êtes a quel rang dans votre compétition?<br>
+Moi: Premiers<br>
+Barman: lolwat!? Vous êtes les seuls qui buvez!!</p></div></blockquote></div></section>
+<section id="_ctf_generations" class="topic" data-background-color="#da291c"><h2>CTF Generations</h2></section>
+<section data-background-image="images/prevgen_star-trek.jpg" data-background-size="contain"></section>
+<section id="_first_generation"><h2>First Generation</h2><div class="ulist"><ul><li><p>Challenges were easier</p></li><li><p>Some competitions really poor</p></li><li><p>We were obnoxious, always drinking, yet still won</p></li><li><p>We had it easy</p></li></ul></div></section>
+<section><div class="paragraph"><p><span class="image"><img src="images/prevgen_smoking.png" alt="prevgen smoking"></span> <span class="image"><img src="images/prevgen_guy.png" alt="prevgen guy"></span></p></div>
+<aside class="notes"><div class="paragraph"><p>so it was like professional hockey in the 70s, the guy were smoking a pack a
+day yet still won stanley cups</p></div></aside></section>
+<section data-background-image="images/nextgen_star-trek.jpg" data-background-size="contain"></section>
+<section id="_the_next_generation"><h2>The Next Generation</h2><div class="ulist"><ul><li><p>Better educated</p></li><li><p>More resources online</p></li><li><p>Generally a lot stronger</p></li><li><p>Challenges are <strong>way</strong> harder</p></li></ul></div></section>
+<section id="_conclusion" class="topic" data-background-color="#da291c"><h2>Conclusion</h2></section>
+<section id="_y_en_a_pas_de_tool_secret" class="topic" data-background-color="black"><h2>Y&#8217;en a pas de tool secret&#8230;&#8203;</h2><aside class="notes"><div class="paragraph"><p>Si y&#8217;a un secret c&#8217;est le gin</p></div></aside></section>
+<section><h3><em>Failure is simply the opportunity to begin again, this time more intelligently. There is no disgrace in honest failure; there is disgrace in fearing to fail.</em></h3><div class="paragraph"><p>&#8201;&#8212;&#8201;Henry Ford</p></div>
+<aside class="notes"><div class="paragraph"><p>les meilleurs se pratiquent, échouent et recommencent et apprennent les uns des autres</p></div></aside></section>
+<section data-background-image="images/we-want-you.jpg" data-background-size="contain">
+<aside class="notes"><div class="paragraph"><p>Dgoulet vous veut.</p></div></aside></section>
+<section id="_questions"><h2>Questions?</h2><div class="paragraph"><p>Merci!</p></div>
+<div class="ulist"><ul><li><p><a href="https://twitter.com/obilodeau">@obilodeau</a></p></li><li><p><a href="https://nsec.io/">NorthSec</a></p></li><li><p><a href="http://pinboard.com/u:plaxx/t:security">My online bookmarks</a></p></li><li><p><a href="https://github.com/obilodeau/scratchpad">My programming and infosec scratchpad</a></p></li><li><p><a href="http://montrehack.ca">MontréHack monthly workshops</a></p></li><li><p><a href="https://ringzer0team.com/">RingZer0 Team Online CTF</a></p></li><li><p><a href="https://slackin-tnc.herokuapp.com/">The Northern Coalition Slack</a></p></li></ul></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: true,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: false,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'owasp',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'none',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'slide',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 1080,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.01,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 4,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>

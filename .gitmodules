@@ -4,3 +4,7 @@
 [submodule "northsec-two-years-of-montrehack/reveal.js"]
 	path = northsec-two-years-of-montrehack/reveal.js
 	url = https://github.com/hakimel/reveal.js.git
+[submodule "how-to-suck-at-ctfs-owasp-mtl-2017/reveal.js"]
+	path = 2017-04-04_how-not-to-suck-at-ctfs/reveal.js
+	url = https://github.com/GoSecure/reveal.js.git
+	branch = gosecure
